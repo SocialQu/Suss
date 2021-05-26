@@ -28,6 +28,15 @@ Süß will provide a minimalistic, elegant, easy to use interface. Below the fou
 
 ## Value Proposition
 
+* The accuracy of provided results.
+
+* Prioritization of data privacy.
+
+* Interesting and insightful metrics.
+
+* Convenience and ease of use.
+
+* Inevitable necessity from day one. 🥇
 
 
 ## Technological Stack
