@@ -32,15 +32,11 @@
 
 ## Transcription service 🐕‍🦺
 
-- [ ] 
+- [ ] Find Text to Speech API dependency.
 
-- [ ] 
+- [ ] Grant microphone 🎤 permission and output text.
 
-- [ ] 
-
-- [ ] 
-
-- [ ] 
+- [ ] Load TensorflowJS and embed sentences.
 
 
 ## KPIs 🚇
