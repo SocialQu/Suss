@@ -78,6 +78,6 @@ At these stage of early development, these are the main areas were you can help:
 
 - [ ] SaaS partnerships to complement a solid go-to market strategy.
 
-If you are interested in helping with any of the above tasks, or you believe that you can 🥫 provide additional exceptional value, please reach out to my LinkedIn account. 🖇️
+If you are interested in helping with any of the above tasks, or you believe that you can provide additional exceptional value, please reach out to my [LinkedIn](https://www.linkedin.com/in/santiagoqu/) account. 🖇️
 
-If you are interested on learning more about the theoretical foundations that power this product, I invite you to read What are Word Embeddings or visit my NLP online course.
+If you are interested on learning more about the theoretical foundations that power this product, I invite you to read my essay: [What are Word Embeddings?](https://medium.com/geekculture/what-are-word-embeddings-6f6f677b13ce?sk=45ba2e778d00838e42cf78a8d2386c58) or take my 🆓 [NLP online course](borgez.ml).
