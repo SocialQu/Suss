@@ -41,15 +41,15 @@
 
 ## KPIs 🚇
 
-- [ ] 
+- [ ] Compile benchmark dataset.
 
-- [ ] 
+- [ ] Sentiment Analysis. 🌋
 
-- [ ] 
+- [ ] Diversity computation.
 
-- [ ] 
+- [ ] Agreeement computation.
 
-- [ ] 
+- [ ] Change ♻️ KPI.
 
 
 ## Summarization 🌅
