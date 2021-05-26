@@ -19,4 +19,15 @@
 
 1. Import TensorflowJS model.
 
-2. Return value from 0 to 100.
+2. Return value from 0 to 💯
+
+
+## Diversity ⚔️
+
+1. Collect data from videos, podcast and blogs.
+
+2. 🖥️ Compute the average, maximum and minimum diversity in views.
+
+3. Compare the meeting's diversity against the probability distribution.
+
+4. Reward the meeting's that fall 🥮 at the middle.
