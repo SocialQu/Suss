@@ -13,3 +13,10 @@
 5. Join both the most representative sentences by clusters and time periods.
 
 6. Provide headings 🗣️ for each segment of the meeting.
+
+
+## Positivity 📯
+
+1. Import TensorflowJS model.
+
+2. Return value from 0 to 100.
