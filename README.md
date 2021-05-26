@@ -2,6 +2,7 @@
 
 AI transcription &amp; summarization service for videoconferences 🐕‍🦺
 
+
 ## Motivation
 
 It is not uncommon for employees to spend on average 20% of their time in meetings.
@@ -51,6 +52,7 @@ The summarization 🌅 feature is based on TensorflowJS, word embeddings and k-m
 
 KPIs are an appendix of the vectorial analysis 📲 of language understanding.
 
+
 ## Vision
 
 As the product progresses three axis will lead the product development:
@@ -63,6 +65,19 @@ As the product progresses three axis will lead the product development:
 
 The path 〽️ to achieve these goals will start from a amicable notification system, intuitive visual communication and state of the art deep learning models. 🎨
 
+
 ## Contact
 
+At these stage of early development, these are the main areas were you can help:
 
+- [ ] Beta testers, in English, Spanish, French or German.
+
+- [ ] Product evangelists, affiliate marketers and growth hackers.
+
+- [ ] Investors, mentors or accelerator programs.
+
+- [ ] SaaS partnerships to complement a solid go-to market strategy.
+
+If you are interested in helping with any of the above tasks, or you believe that you can 🥫 provide additional exceptional value, please reach out to my LinkedIn account. 🖇️
+
+If you are interested on learning more about the theoretical foundations that power this product, I invite you to read What are Word Embeddings or visit my NLP online course.
