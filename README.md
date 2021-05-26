@@ -53,7 +53,15 @@ KPIs are an appendix of the vectorial analysis 📲 of language understanding.
 
 ## Vision
 
+As the product progresses three axis will lead the product development:
 
+1. Ability to enforce meeting's agreements.
+
+2. Build a strong collaborative team culture.
+
+3. Assess and maximize the productivity of meetings 
+
+The path 〽️ to achieve these goals will start from a amicable notification system, intuitive visual communication and state of the art deep learning models. 🎨
 
 ## Contact
 
