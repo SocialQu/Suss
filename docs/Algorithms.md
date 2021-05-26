@@ -31,3 +31,16 @@
 3. Compare the meeting's diversity against the probability distribution.
 
 4. Reward the meeting's that fall 🥮 at the middle.
+
+
+## Agreeement 🤝
+
+1. Segment the meeting in N segments (use a dictionary).
+
+2. For each segment compute the average distance between sentences.
+
+3. Use a line chart 📉 to show the progression of agreement with respect to time.
+
+4. Smooth and style the line. 🎨
+
+
