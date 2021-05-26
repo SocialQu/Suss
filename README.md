@@ -41,7 +41,15 @@ Süß will provide a minimalistic, elegant, easy to use interface. Below the fou
 
 ## Technological Stack
 
+The landing site should be welcoming and innovative, ideally powered by 3D rendering tech.
 
+An clear CTA redirects to an elegant dashboard with well explained metrics a demo video and a path to grant relevant permissions and get started.
+
+The transcription service is powered by the native browser's TextToSpeech API.
+
+The summarization 🌅 feature is based on TensorflowJS, word embeddings and k-means clustering.
+
+KPIs are an appendix of the vectorial analysis 📲 of language understanding.
 
 ## Vision
 
