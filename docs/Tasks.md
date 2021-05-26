@@ -15,15 +15,19 @@
 
 ## Dashboard 💨
 
-- [ ] 
+- [ ] Document required atoms.
 
-- [ ] 
+- [ ] Create app's layout. 🍎
 
-- [ ] 
+- [ ] Transcription content div.
 
-- [ ] 
+- [ ] Develop KPI charts.
 
-- [ ] 
+- [ ] Designed minute's format.
+
+- [ ] Set up getting started view. 📐
+
+- [ ] Produce marketing material.
 
 
 ## Transcription service 🐕‍🦺
