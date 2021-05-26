@@ -1,6 +1,6 @@
 # Algorithm 🐲
 
-## Summarization
+## Summarization 🌅
 
 1. Tokenize the audio by sentences.
 
@@ -15,14 +15,16 @@
 6. Provide headings 🗣️ for each segment of the meeting.
 
 
-## Positivity 📯
+## KPIs 🚇
+
+### Positivity 📯
 
 1. Import TensorflowJS model.
 
 2. Return value from 0 to 💯
 
 
-## Diversity ⚔️
+### Diversity ⚔️
 
 1. Collect data from videos, podcast and blogs.
 
@@ -33,7 +35,7 @@
 4. Reward the meeting's that fall 🥮 at the middle.
 
 
-## Agreeement 🤝
+### Agreeement 🤝
 
 1. Segment the meeting in N segments (use a dictionary).
 
@@ -43,4 +45,14 @@
 
 4. Smooth and style the line. 🎨
 
+
+### Change ♻️
+
+1. Reuse the sentences dataset to find the average shift in views from start to finish.
+
+2. Segment the meeting and find the average 🏣 position through time.
+
+3. Perform linear regression to compute the average starting and ending point.
+
+4. Find 🔬 the relative distance of the meeting's starting to were it ended with respect to the training dataset.
 
