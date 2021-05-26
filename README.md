@@ -1,9 +1,10 @@
-# Süss
+# Süß
+
 AI transcription &amp; summarization service for videoconferences 🐕‍🦺
 
 ## Motivation
 
-It is not uncommon for employees to spend 20% of their time in meetings.
+It is not uncommon for employees to spend on average 20% of their time in meetings.
 
 Documenting a meeting in a minute or memo is a valuable resource to reference what was talked about and agreed, provide a good starting point for future meetings and assess its productivity.
 
@@ -14,6 +15,15 @@ Recent advances in Deep Learning and web browsers 🕸️ make it possible to au
 
 ## Product Definition
 
+Süß will provide a minimalistic, elegant, easy to use interface. Below the four main tasks it is expected to achieve on a first iteration:
+
+- [ ] A real time transcription service.
+
+- [ ] An intuitive dashboard to track KPIs.
+
+- [ ] An accurate summarization supplementary feature.
+
+- [ ] A clear CTA to assess the demand for the product.
 
 
 ## Value Proposition
