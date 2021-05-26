@@ -66,14 +66,15 @@
 
 
 ## Email 📨
-- [ ] 
 
-- [ ] 
+- [ ] UI component.
 
-- [ ] 
+- [ ] Choose most appropriate dependency.
 
-- [ ] 
+- [ ] Implement email service.
 
-- [ ] 
+- [ ] DB Integration.
+
+- [ ] Amplitude events.
 
 
