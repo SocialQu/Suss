@@ -54,15 +54,15 @@
 
 ## Summarization 🌅
 
-- [ ] 
+- [ ] Set approximate number of sentences.
 
-- [ ] 
+- [ ] Set meeting's periods and clusters.
 
-- [ ] 
+- [ ] Traverse meeting and select relevant sentences.
 
-- [ ] 
+- [ ] Choose headings.
 
-- [ ] 
+- [ ] Engage summary to content.
 
 
 ## Email 📨
