@@ -13,6 +13,16 @@ const summarize = async() => {
     const embeddings = await tensors.array()
 
     console.log(embeddings[0])
+
+    // Find average
+
+    // Compute Distance
+
+    // Get 5 - 10% of sentences by distance.
+
+    // Test summarization.
+
+    // Plan next steps.
 }
 
 
