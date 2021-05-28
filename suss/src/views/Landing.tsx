@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import { CSSProperties } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
@@ -36,7 +34,7 @@ const Video = () => <div style={{margin:'auto', textAlign:'center'}}>
 </div>
 
 
-const ctaStyle:CSSProperties  = { 
+export const ctaStyle:CSSProperties  = { 
     width:'100%', 
     maxWidth:560, 
     fontSize:'1.5rem', 
