@@ -57,10 +57,25 @@ const summarize = async() => {
     const breakpoint = Math.round(sentences.length * .05)
     const minSimilarity = sortedTokens[breakpoint].similarity
     const summary = tokens.filter(({ similarity }) => similarity < minSimilarity)
-    console.log('Summary', console.log(summary.map(({ embeddings, ...s }) => s)))
-    console.log('minSimilarity:', minSimilarity)
+    // console.log('Summary', console.log(summary.map(({ embeddings, ...s }) => s)))
+    // console.log('minSimilarity:', minSimilarity)
+
+    console.log('Summary', summary.map(({ text }) => text))
 
     // Plan next steps.
+    /*
+    - Compute sentence uniqueness.
+    - Dismiss short sentences.
+    - Segment by periods.
+    - Make charts to analyze it:
+        - Dimensionality Reduced Vectors.
+        - Bubles by time, size and radians.
+        - Distribution of summary by time.
+        - Bar chart on similarity (delta to the minimum)
+    - Find clusters.
+    - Difference between words.
+    - Continuity of sentences.
+    */
 }
 
 
