@@ -51,10 +51,14 @@ const summarize = async() => {
     }))
 
     const sortedTokens = [...tokens].sort(({ similarity:a }, { similarity:b }) => a > b ? 1 : -1)
-    console.log('sortedTokens', sortedTokens.filter((_, i) => i < 10).map(({ text, similarity }) => ({similarity, text })))
+    // console.log('sortedTokens', sortedTokens.filter((_, i) => i < 10).map(({ text, similarity }) => ({similarity, text })))
     
-
     // Test summarization.
+    const breakpoint = Math.round(sentences.length * .05)
+    const minSimilarity = sortedTokens[breakpoint].similarity
+    const summary = tokens.filter(({ similarity }) => similarity < minSimilarity)
+    console.log('Summary', console.log(summary.map(({ embeddings, ...s }) => s)))
+    console.log('minSimilarity:', minSimilarity)
 
     // Plan next steps.
 }
