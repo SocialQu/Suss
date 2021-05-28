@@ -17,6 +17,15 @@ const getSimilarity = (center:number[], embedding: number[]) => {
     return delta
 }
 
+
+interface iToken {
+    text: string
+    order: number
+    similarity: number
+    embeddings: number[]
+}
+
+
 const summarize = async() => {
     // Embed Sentences
     const sentences = transcript.split('\n')
@@ -31,9 +40,19 @@ const summarize = async() => {
 
     // Compute Similarity
     const similarities = embeddings.map(e => getSimilarity(center, e))
-    console.log('similarities:', similarities)
+    // console.log('similarities:', similarities)
 
     // Get 5 - 10% of sentences by distance.
+    const tokens:iToken[] = sentences.map((s, i) => ({
+        text:s,
+        order:i,
+        similarity: getSimilarity(center, embeddings[i]),
+        embeddings:embeddings[i]
+    }))
+
+    const sortedTokens = [...tokens].sort(({ similarity:a }, { similarity:b }) => a > b ? 1 : -1)
+    console.log('sortedTokens', sortedTokens.filter((_, i) => i < 10).map(({ text, similarity }) => ({similarity, text })))
+    
 
     // Test summarization.
 
