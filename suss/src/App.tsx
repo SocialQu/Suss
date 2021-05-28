@@ -39,10 +39,8 @@ export const App = () => {
     }, [])
 
 
-    const goHome = () => {}
-
 	return <>
-        <NavBar goHome={goHome}/>
+        <NavBar goHome={() => setLanding(true)}/>
 
         <div className='section' style={sectionStyle}>
             {
