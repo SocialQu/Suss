@@ -8,7 +8,7 @@ const Title = () => {
 
     return <div style={{ marginBottom:'2em', marginTop:'2em' }}>
         <p className='title is-1 has-text-centered' style={{color:'white', marginBottom:'0'}}> 
-            Summarize your Meetings!
+            Summarize your Meetings 📝
         </p>
         {
             largeScreen && 
