@@ -45,12 +45,16 @@ const ctaStyle:CSSProperties  = {
     height:48
 }
 
-const CTA = () => <div className='control' style={{ textAlign:'center', marginTop:'1em' }}>
-    <a className='button is-info' style={ctaStyle}> Get Started Now! </a>
+
+const CTA = ({ click }: iLanding) => <div className='control' style={{ textAlign:'center', marginTop:'1em' }}>
+    <a className='button is-info' style={ctaStyle} onClick={click}> Get Started Now! </a>
 </div>
 
-export const Landing = () => <>
+
+
+interface iLanding { click():void }
+export const Landing = ({ click }: iLanding) => <>
     <Title />
     < Video />
-    <CTA />
+    <CTA click={click}/>
 </>
