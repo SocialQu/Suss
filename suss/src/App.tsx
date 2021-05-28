@@ -2,7 +2,7 @@ import { App as RealmApp, User, Credentials } from 'realm-web'
 import { useState, useEffect, CSSProperties } from 'react'
 import amplitude from 'amplitude-js'
 
-import { Summarization } from './views/Summarization'
+import { Transcription } from './views/Transcription'
 import { NavBar } from './components/NavBar'
 import { Footer } from './components/Footer'
 import { Landing } from './views/Landing'
@@ -46,7 +46,7 @@ export const App = () => {
             {
                 isLanding
                 ?   <Landing click={() => setLanding(false)}/>
-                :   <Summarization />
+                :   <Transcription />
             }
         </div>
 
