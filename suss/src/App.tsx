@@ -2,6 +2,7 @@ import { App as RealmApp, User, Credentials } from 'realm-web'
 import { useState, useEffect, CSSProperties } from 'react'
 import amplitude from 'amplitude-js'
 
+import { Transcription } from './views/Transcription'
 import { NavBar } from './components/NavBar'
 import { Footer } from './components/Footer'
 import { Landing } from './views/Landing'
@@ -19,14 +20,14 @@ const connectMongo = async() => {
 }
 
 
-const landingStyle:CSSProperties = {
+const sectionStyle:CSSProperties = {
     paddingBottom:0,
     minHeight:'calc(100vh - 180px)'
 }
 
 export const App = () => {
     const [ user, setUser ] = useState<User>()
-
+    const [ isLanding, setLanding ] = useState(true)
 
     useEffect(() => {
         return 
@@ -38,13 +39,15 @@ export const App = () => {
     }, [])
 
 
-    const goHome = () => {}
-
 	return <>
-        <NavBar goHome={goHome}/>
+        <NavBar goHome={() => setLanding(true)}/>
 
-        <div className='section' style={landingStyle}>
-            <Landing />
+        <div className='section' style={sectionStyle}>
+            {
+                isLanding
+                ?   <Landing click={() => setLanding(false)}/>
+                :   <Transcription />
+            }
         </div>
 
         <Footer/>

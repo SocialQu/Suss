@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import { CSSProperties } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
@@ -36,7 +34,7 @@ const Video = () => <div style={{margin:'auto', textAlign:'center'}}>
 </div>
 
 
-const ctaStyle:CSSProperties  = { 
+export const ctaStyle:CSSProperties  = { 
     width:'100%', 
     maxWidth:560, 
     fontSize:'1.5rem', 
@@ -45,12 +43,16 @@ const ctaStyle:CSSProperties  = {
     height:48
 }
 
-const CTA = () => <div className='control' style={{ textAlign:'center', marginTop:'1em' }}>
-    <a className='button is-info' style={ctaStyle}> Get Started Now! </a>
+
+const CTA = ({ click }: iLanding) => <div className='control' style={{ textAlign:'center', marginTop:'1em' }}>
+    <a className='button is-info' style={ctaStyle} onClick={click}> Get Started Now! </a>
 </div>
 
-export const Landing = () => <>
+
+
+interface iLanding { click():void }
+export const Landing = ({ click }: iLanding) => <>
     <Title />
     < Video />
-    <CTA />
+    <CTA click={click}/>
 </>
