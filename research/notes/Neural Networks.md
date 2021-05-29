@@ -10,3 +10,8 @@ Recursively select the sentences that should be included in the summary.
 ## CNNs
 
 The CNN model is applied to learn the feature vector for each sentence and assign a salience score to it.
+
+
+## Attention 🎨
+
+Neural language model with a contextual input encoder. Our encoder is modeled off of theattention-based encoder of Bahdanau.
