@@ -11,7 +11,7 @@
 
 * Word frequency.
 * Statistical methods.
-* Text connectivity.
-* Graph based techniques: nodes are sentences 📤 edges are the degree of similarity.
-
-
+* Text connectivity. (Lexical chains)
+* Graph based techniques: nodes are sentences 📤 edges are the degree of similarity. (TextRank & Cluster LexRank)
+* Machine Learning: decision trees, randomly forests 🎄 etc.
+* Algebraic Methods: 📐 LSA, Non-negative Matrix Factorization (NMF) & Semi-discrete Matrix Decomposition.
