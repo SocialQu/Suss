@@ -13,3 +13,5 @@
 4. Build a custom dataset from YT. Use title & description to train a Neural Network.
 
 5. Find the salience score of each sentence word. Attempt the same with paragraphs to sentences 📤. Select the sentences with most salience.
+  * Which sentence affects the most the vector's position. Use drpo-out.
+  * Find the 🔐 keywords of the meeting.
