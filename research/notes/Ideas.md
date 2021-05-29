@@ -16,3 +16,5 @@
   * Which sentence affects the most the vector's position. Use drpo-out.
   * Find the 🔐 keywords of the meeting.
   * Use n-gramms to construct the title and topics, while leave complete sentences for notes. 🎶
+
+6. Import Tensorflow Python model.
