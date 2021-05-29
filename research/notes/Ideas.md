@@ -15,3 +15,4 @@
 5. Find the salience score of each sentence word. Attempt the same with paragraphs to sentences 📤. Select the sentences with most salience.
   * Which sentence affects the most the vector's position. Use drpo-out.
   * Find the 🔐 keywords of the meeting.
+  * Use n-gramms to construct the title and topics, while leave complete sentences for notes. 🎶
