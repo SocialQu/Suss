@@ -1,4 +1,4 @@
-# Latent Semántica Analysis
+# Latent Semantic Analysis
 
 * Sentences are columns and words are rows.
 * Remove step words & lemmatize words. (optional)
@@ -8,7 +8,7 @@
 
 ## Sentence Selection
 
-* Based on concepts derived from SVD.
+* SVD generates concepts. Then select the sentences that best reflect the concepts.
 
 
 ### Limitations
