@@ -3,11 +3,12 @@
 * Sentences are columns and words are rows.
 * Remove step words & lemmatize words. (optional)
 * Cell values: binary, frequency, tf-idf.
-* Dimensionality Reduction & sentence selection.
+* Singular Value Decomposition 
+* Sentence selection.
 
 ## Sentence Selection
 
-* 
+* Based on concepts derived from SVD.
 
 
 ### Limitations
