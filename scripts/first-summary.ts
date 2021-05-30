@@ -1,4 +1,5 @@
-// npx ts-node summarization
+// npx ts-node first-summary
+
 
 import { load } from '@tensorflow-models/universal-sentence-encoder'
 import '@tensorflow/tfjs-node'
