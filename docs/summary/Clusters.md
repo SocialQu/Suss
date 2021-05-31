@@ -11,6 +11,9 @@
 
 ## Prerequisites
 
-
+* [ ] Information computation.
+* [ ] 2 Visualization Charts.
+* [ ] Try out k-means & hierarchichal clustering.
+* [ ] Removal of Sentence by Marginal Information Computation.
 
 ## RoadMap
