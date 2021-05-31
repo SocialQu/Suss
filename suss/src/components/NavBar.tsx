@@ -3,7 +3,8 @@
 import { useState } from 'react'
 
 
-const GumRoad = ({ isActive=false }: { isActive? : boolean }) => <a 
+interface iNavbarTab extends iNavBar { isActive : boolean }
+const GumRoad = ({ isActive }: iNavbarTab) => <a 
     style = {{color:'white'}}
     className={`navbar-item ${isActive ? 'navbar-item-active': ''}`}
     href='https://gumroad.com/l/cortazar' 
@@ -12,14 +13,21 @@ const GumRoad = ({ isActive=false }: { isActive? : boolean }) => <a
 > <strong> PRICING </strong> </a>
 
 
-interface iNavBar { goHome():void }
-export const NavBar = ({ goHome }: iNavBar) => {
+const Charts = ({ isActive, click }:iNavbarTab) => <a 
+    style = {{color:'white'}}
+    onClick ={() => click('Charts')}
+    className={`navbar-item ${isActive ? 'navbar-item-active': ''}`}
+> Charts </a>
+
+export type SussView = 'Home' | 'Transcript' | 'Summary' | 'Charts'
+interface iNavBar { click(view:SussView):void }
+export const NavBar = ({ click }: iNavBar) => {
     const [ isActive, setActive ] = useState(false)
 
     return <nav className='navbar is-black' role='navigation' aria-label='main navigation'>
         <div className='container'>
             <div className='navbar-brand'>
-                <a className='navbar-item' onClick={goHome}>
+                <a className='navbar-item' onClick={() => click('Home')}>
                     <img src='SocialQ.png' style={{ height:36, maxHeight: 'none' }} alt={'SocialQ logo'}/>
                     <p className='navbar-item' style={{ fontSize: '2em', color:'white' }} > SocialQ </p>
                 </a>
@@ -43,7 +51,11 @@ export const NavBar = ({ goHome }: iNavBar) => {
                 style={{ maxWidth:1200, marginRight:'auto', background:'#0A0A0A' }}
             >
                 <div className={`navbar-end ${isActive ? 'navbar-end-active': ''}`} style={{fontSize: '1.2em'}}>
-                    <GumRoad isActive={isActive}/> 
+                    <Charts isActive={isActive} click={click}/> 
+                </div>
+
+                <div className={`navbar-end ${isActive ? 'navbar-end-active': ''}`} style={{fontSize: '1.2em', marginLeft:16}}>
+                    <GumRoad isActive={isActive} click={click}/> 
                 </div>
             </div>
         </div>
