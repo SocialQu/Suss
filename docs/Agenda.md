@@ -5,7 +5,7 @@
 
 * [ ] **10am:** 2 Charts. 
     * [X] NavBar Item.
-    * [ ] Install Dependencies & Import Components.
+    * [X] Install Dependencies & Import Components.
     * [ ] Embed and Save Sentences.
     * [ ] Render Charts.
 
