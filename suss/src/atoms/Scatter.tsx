@@ -29,7 +29,9 @@ const ScatterTooltip = ({ active, payload }:iScatterTooltip) => {
 }
 
 
-const colors = ['#8884d8', '#82ca9d']
+
+
+const colors = ['#2274A5', '#F75C03', '#F1C40F', '#D90368', '#00CC66']
 interface iScatter { label?:string, data: {name:string, x:number, y:number}[][] }
 const subtitleStyle:CSSProperties = {color:'darkorange', marginBottom:'0rem', marginTop:'2rem', textAlign:'center' }
 export const Scatter = ({label, data}:iScatter) => <div>
