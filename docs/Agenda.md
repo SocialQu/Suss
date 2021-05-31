@@ -4,7 +4,7 @@
 ## Monday
 
 * [ ] **10am:** 2 Charts. 
-    * [ ] NavBar Item.
+    * [X] NavBar Item.
     * [ ] Install Dependencies & Import Components.
     * [ ] Embed and Save Sentences.
     * [ ] Render Charts.
