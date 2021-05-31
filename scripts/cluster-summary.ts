@@ -1,9 +1,22 @@
 // npx ts-node cluster-summary
 
-const kmeans = require('ml-kmeans');
+import { load } from '@tensorflow-models/universal-sentence-encoder'
+import { transcript } from './data'
+import '@tensorflow/tfjs-node'
 
-let data = [[1, 1, 1], [1, 2, 1], [-1, -1, -1], [-1, -1, -1.5]];
 
-let ans = kmeans(data, 2);
-console.log(ans);
+const kmeans = require('ml-kmeans')
 
+const summarize = async() => {
+    // Embed Sentences
+    const sentences = transcript.split('\n')
+    const model = await load()
+    const tensors = await model.embed(sentences)
+    const embeddings = tensors.arraySync()
+
+    const { clusters } = kmeans(embeddings, 5)
+    console.log(clusters.length)
+}
+
+
+summarize().catch(console.log)
