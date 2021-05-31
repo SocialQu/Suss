@@ -10,7 +10,7 @@
     * [X] Render Charts.
 
 * [ ] **11am:** K-Means Implementation.
-    * [ ] Install Dependency
+    * [X] Install Dependency
     * [ ] Sample Implementation of K-means
         * Get labeled senteces.
         * Get counts of clusters.
