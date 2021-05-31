@@ -8,5 +8,8 @@ const getStandardDeviation = (vector:number[]) => {
     return deviation
 }
 
-const getDictionary = (text:string) => text.split(' ').reduce((d, i) => ({...d, [i]: d[i] ? d[i]+1 : 1}), {} as {[key:string]:number})
+interface iDictionary {[key:string]:number}
+const getDictionary = (words:string[]) => words.reduce((d, i) => ({...d, [i]: d[i] ? d[i]+1 : 1}), {} as iDictionary)
 
+interface iGetInformation { words:string[], dictionary:iDictionary, tokens:number}
+const getInformation = ({words, dictionary, tokens}:iGetInformation) => words.reduce((d, w) => d-=Math.log(dictionary[w]/tokens), 0)
