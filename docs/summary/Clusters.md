@@ -17,3 +17,8 @@
 * [ ] Removal of Sentence by Marginal Information Computation.
 
 ## RoadMap
+
+* [ ] Set Charts and add them to NavBar.
+* [ ] First Implementation of K-means. 
+* [ ] Sentence Selection.
+* [ ] Tests and evaluation, plan meeting minute.
