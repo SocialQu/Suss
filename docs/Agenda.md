@@ -19,7 +19,7 @@
 
 * [ ] **12pm:** Sentence Selection.
     * [X] Compute information - rank sentences.
-    * [ ] Cluster statistics - avg, deviation & amount of information. 
+    * [X] Cluster statistics - avg, deviation & amount of information. 
     * [ ] N-gramms to represent cluster's and meeting information.
     * [ ] Compute meetings information path.
 
