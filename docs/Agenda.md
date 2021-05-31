@@ -10,6 +10,13 @@
     * [X] Render Charts.
 
 * [ ] **11am:** K-Means Implementation.
+    * [ ] Install Dependency
+    * [ ] Sample Implementation of K-means
+        * Get labeled senteces.
+        * Get counts of clusters.
+    * [ ] Add clusters data to charts (by color).
+    * [ ] Implement hierarchical clustering.
+
 * [ ] **12pm:** Sentence Selection.
 * [ ] **2pm:** Minute View.
 * [ ] **4pm:** LinkedIn Post (20 outreaches - 10 personalized).
