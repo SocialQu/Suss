@@ -1,11 +1,11 @@
 import { App as RealmApp, User, Credentials } from 'realm-web'
-import { useState, useEffect, CSSProperties } from 'react'
-import amplitude from 'amplitude-js'
+import { useState, CSSProperties } from 'react'
 
 import { Transcription } from './views/Transcription'
 import { NavBar, SussView } from './components/NavBar'
 import { Footer } from './components/Footer'
 import { Landing } from './views/Landing'
+import { Charts } from './views/Charts'
 
 import 'bulma/css/bulma.css'
 import './App.css'
@@ -34,6 +34,7 @@ export const App = () => {
         <div className='section' style={sectionStyle}>
             { view === 'Home' && <Landing click={() => setView('Transcript')}/> }
             { view === 'Transcript' && <Transcription /> }
+            { view === 'Charts' && <Charts /> }
         </div>
 
         <Footer/>
