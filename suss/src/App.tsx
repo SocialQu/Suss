@@ -3,7 +3,7 @@ import { useState, useEffect, CSSProperties } from 'react'
 import amplitude from 'amplitude-js'
 
 import { Transcription } from './views/Transcription'
-import { NavBar } from './components/NavBar'
+import { NavBar, SussView } from './components/NavBar'
 import { Footer } from './components/Footer'
 import { Landing } from './views/Landing'
 
@@ -26,28 +26,14 @@ const sectionStyle:CSSProperties = {
 }
 
 export const App = () => {
-    const [ user, setUser ] = useState<User>()
-    const [ isLanding, setLanding ] = useState(true)
-
-    useEffect(() => {
-        return 
-
-        connectMongo().then(user => setUser(user))
-
-        amplitude.getInstance().init(process.env.REACT_APP_AMPLITUDE_TOKEN as string)
-        amplitude.getInstance().logEvent('VISIT_SUSS')
-    }, [])
-
+    const [ view, setView ] = useState<SussView>('Home')
 
 	return <>
-        <NavBar goHome={() => setLanding(true)}/>
+        <NavBar click={(view) => setView(view)}/>
 
         <div className='section' style={sectionStyle}>
-            {
-                isLanding
-                ?   <Landing click={() => setLanding(false)}/>
-                :   <Transcription />
-            }
+            { view === 'Home' && <Landing click={() => setView('Transcript')}/> }
+            { view === 'Transcript' && <Transcription /> }
         </div>
 
         <Footer/>
