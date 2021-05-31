@@ -7,12 +7,17 @@ export const Charts = () => {
         <p 
             className='title is-1 has-text-centered' 
             style={{color: 'white'}}
-        > Meeting Charts </p>
+        > Meeting's Charts </p>
 
         <div>
             <Scatter 
                 label={'Information Through Time'}
                 data={[D1.map(([y], x) => ({x, y, name:''}))]} 
+            />
+
+            <Scatter 
+                label={'2D Sentences Representation'}
+                data={[D2.map(([x,y]) => ({x, y, name:''}))]} 
             />
         </div>
     </div>
