@@ -8,3 +8,5 @@ const getStandardDeviation = (vector:number[]) => {
     return deviation
 }
 
+const getDictionary = (text:string) => text.split(' ').reduce((d, i) => ({...d, [i]: d[i] ? d[i]+1 : 1}), {} as {[key:string]:number})
+
