@@ -11,7 +11,7 @@
 
 * [ ] **11am:** K-Means Implementation.
     * [X] Install Dependency
-    * [ ] Sample Implementation of K-means
+    * [X] Sample Implementation of K-means
         * Get labeled senteces.
         * Get counts of clusters.
     * [ ] Add clusters data to charts (by color).
