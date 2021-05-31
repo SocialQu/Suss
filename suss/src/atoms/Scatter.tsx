@@ -11,7 +11,7 @@ import {
 
 
 interface iScatterTooltip { active?:boolean, payload?:any[], label?:string}
-const ScatterTooltip = ({ active, payload, label }:iScatterTooltip) => {
+const ScatterTooltip = ({ active, payload }:iScatterTooltip) => {
     if (active && payload && payload.length) {
 
         return (
@@ -31,9 +31,9 @@ const ScatterTooltip = ({ active, payload, label }:iScatterTooltip) => {
 
 const colors = ['#8884d8', '#82ca9d']
 interface iScatter { label?:string, data: {name:string, x:number, y:number}[][] }
-const subtitleStyle:CSSProperties = {color:'darkorange', marginBottom:'1rem', marginTop:'2rem', textAlign:'center' }
+const subtitleStyle:CSSProperties = {color:'darkorange', marginBottom:'0rem', marginTop:'2rem', textAlign:'center' }
 export const Scatter = ({label, data}:iScatter) => <div>
-    <p className='subtitle is-4 has-text-centered'  style={subtitleStyle}> { label} </p>
+    <p className='subtitle is-4 has-text-centered'  style={subtitleStyle}> { label } </p>
 
     <ResponsiveContainer width='100%' height={360}>
         <ScatterChart
