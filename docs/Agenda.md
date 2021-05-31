@@ -4,6 +4,11 @@
 ## Monday
 
 * [ ] **10am:** 2 Charts. 
+    * [ ] NavBar Item.
+    * [ ] Install Dependencies & Import Components.
+    * [ ] Embed and Save Sentences.
+    * [ ] Render Charts.
+
 * [ ] **11am:** K-Means Implementation.
 * [ ] **12pm:** Sentence Selection.
 * [ ] **2pm:** Minute View.
