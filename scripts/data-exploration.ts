@@ -22,6 +22,7 @@ const storeData = async() => {
     const embeddings = await tensors.array()
 
     await reduce(embeddings, 1)
+    await reduce(embeddings, 2)
     return
 }
 
