@@ -18,5 +18,10 @@
     * [ ] Implement hierarchical clustering.
 
 * [ ] **12pm:** Sentence Selection.
+    * [ ] Compute information - rank sentences.
+    * [ ] Cluster statistics - avg, deviation & amount of information. 
+    * [ ] N-gramms to represent cluster's and meeting information.
+    * [ ] Compute meetings information path.
+
 * [ ] **2pm:** Minute View.
 * [ ] **4pm:** LinkedIn Post (20 outreaches - 10 personalized).
