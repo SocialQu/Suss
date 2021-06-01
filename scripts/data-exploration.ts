@@ -49,4 +49,18 @@ const storeData = async() => {
     return
 }
 
-storeData().catch(console.log)
+
+
+const storeEmbeddings = async() => {
+    const tokens = transcript.split('\n')
+    const model = await load()
+    const tensors = await model.embed(tokens)
+    const embeddings = await tensors.array()
+
+    const sentences = embeddings.map((e,i) => ({ embeddings:e, text:tokens[i] }))
+
+    await fs.writeFile(`${dir}/embeddings.json`, JSON.stringify(sentences))
+}
+
+
+storeEmbeddings().catch(console.log)
