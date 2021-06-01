@@ -2,6 +2,7 @@
 
 
 import { load } from '@tensorflow-models/universal-sentence-encoder'
+import { getSimilarity } from './information-metrics'
 import '@tensorflow/tfjs-node'
 
 import { transcript } from './data'
@@ -12,11 +13,7 @@ const findCenter = (vectors: number[][]) => [...Array(vectors[0].length)].map((_
 )
 
 
-const getSimilarity = (center:number[], embedding: number[]) => {
-    if (center.length !== embedding.length) return Infinity
-    const delta = center.reduce((d, i, idx) => d + Math.abs(i - embedding[idx]), 0)
-    return delta
-}
+
 
 
 interface iToken {

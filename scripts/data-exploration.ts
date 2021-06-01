@@ -12,7 +12,7 @@ import { transcript } from './data'
 
 const kmeans = require('ml-kmeans')
 
-const dir = '../suss/src/data'
+const dir = './data'
 const reduce = async(embeddings:number[][], dimensions:number) => {
     const pca = new PCA(embeddings)
     const reduced = pca.predict(embeddings, {nComponents:dimensions}).to2DArray()
@@ -32,9 +32,10 @@ const storeData = async() => {
     const sentences:iSentences[] = tokens.map((t,i) => ({
         text:t, 
         order:i,
-        cluster:clusters[i],
+        d2:D2[i],
         d1:[i,D1[i][0]],
-        d2:D2[i]
+        cluster:clusters[i],
+        embeddings:embeddings[i]
     }))
 
 
@@ -43,9 +44,23 @@ const storeData = async() => {
         return d
     }, [[],[],[],[],[]] as iSentences[][])
 
-    await fs.writeFile(`${dir}/cluster-data.json`, JSON.stringify(data))
+    await fs.writeFile(`${dir}/embeddings-data.json`, JSON.stringify(data))
 
     return
 }
 
-storeData().catch(console.log)
+
+
+const storeEmbeddings = async() => {
+    const tokens = transcript.split('\n')
+    const model = await load()
+    const tensors = await model.embed(tokens)
+    const embeddings = await tensors.array()
+
+    const sentences = embeddings.map((e,i) => ({ embeddings:e, text:tokens[i] }))
+
+    await fs.writeFile(`${dir}/embeddings.json`, JSON.stringify(sentences))
+}
+
+
+storeEmbeddings().catch(console.log)
