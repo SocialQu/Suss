@@ -2,7 +2,7 @@
 
 
 import { load } from '@tensorflow-models/universal-sentence-encoder'
-import { getSimilarity } from './information-metrics'
+import { getSimilarity } from './utils'
 import '@tensorflow/tfjs-node'
 
 import { transcript } from './data'

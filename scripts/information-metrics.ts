@@ -1,15 +1,12 @@
 // npx ts-node information-metrics
+
+
 import clusters from '../suss/src/data/cluster-data.json'
 import embeddings from './data/embeddings.json'
 import { transcript } from './data'
+import { getSimilarity } from './utils'
 const kmeans = require('ml-kmeans')
 
-
-export const getSimilarity = (center:number[], embedding: number[]) => {
-    if (center.length !== embedding.length) return Infinity
-    const delta = center.reduce((d, i, idx) => d + Math.abs(i - embedding[idx]), 0)
-    return delta
-}
 
 const getVariance = (vector:number[]) => {
     const n = vector.length
