@@ -1,6 +1,15 @@
 // npx ts-node information-metrics
 import clusters from '../suss/src/data/cluster-data.json'
+import embeddings from './data/embeddings.json'
 import { transcript } from './data'
+const kmeans = require('ml-kmeans')
+
+
+export const getSimilarity = (center:number[], embedding: number[]) => {
+    if (center.length !== embedding.length) return Infinity
+    const delta = center.reduce((d, i, idx) => d + Math.abs(i - embedding[idx]), 0)
+    return delta
+}
 
 const getVariance = (vector:number[]) => {
     const n = vector.length
@@ -48,4 +57,22 @@ const measureClusters = () => {
     console.log('information', information)
 }
 
-measureClusters()
+// measureClusters()
+
+
+const findCenter = () => {
+    const { centroids } = kmeans(embeddings.map(({ embeddings }) => embeddings), 1)
+    const similarities = centroids.map(({ centroid }:{ centroid:number[] }) => 
+        embeddings.map(({text, embeddings}) => ({
+            text,
+            similarity:getSimilarity(centroid, embeddings)
+        }))
+        .sort(({ similarity: a}, {similarity: b}) => a > b ? 1 : -1)
+        .filter((_, idx) => idx < 5)
+    )
+
+    console.log('similarities', similarities)
+}
+
+
+findCenter()
