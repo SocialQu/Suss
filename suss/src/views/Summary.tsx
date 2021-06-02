@@ -20,7 +20,6 @@ const tableStyle:CSSProperties = {
 const leftTableStyle:CSSProperties = {
     color: 'white',
     background: '#222',
-    borderColor: '#222',
     verticalAlign:'middle'
 }
 
@@ -42,25 +41,39 @@ export const Summary = () => {
                         <p className='title is-3 has-text-centered'> Meeting Tittle </p>
                     </th>
                 </tr>
+
                 <tr>
-                    <td style={leftTableStyle} rowSpan={4}> Topics </td>
-                    <th colSpan={2} style={{borderWidth:0}}> 
-                        <p> Topic A </p>
-                    </th>
+                    <th style={leftTableStyle} rowSpan={4}> Topics </th>
+                    <td colSpan={2} style={{borderWidth:0}}> • Topic A </td>
                 </tr>
                 <tr>
-                    <th colSpan={2} style={{borderWidth:0}}> 
-                        <p> Topic B </p>
-                    </th>
+                    <td colSpan={2} style={{borderWidth:0}}> • Topic B </td>
                 </tr>
                 <tr>
-                    <th colSpan={2} style={{borderWidth:0}}> 
-                        <p> Topic C </p>
-                    </th>
+                    <td colSpan={2} style={{borderWidth:0}}> • Topic C </td>
                 </tr>
                 <tr>
+                    <td colSpan={2}> • Topic D </td>
+                </tr>
+
+                <tr>
+                    <th style={leftTableStyle} rowSpan={4}> • Notes </th>
+                    <td colSpan={2} style={{borderWidth:0}}> • Note A </td>
+                </tr>
+                <tr>
+                    <td colSpan={2} style={{borderWidth:0}}> • Note B </td>
+                </tr>
+                <tr>
+                    <td colSpan={2} style={{borderWidth:0}}> • Note C </td>
+                </tr>
+                <tr>
+                    <td colSpan={2}> • Note D </td>
+                </tr>
+
+                <tr>
+                    <th style={leftTableStyle}> Conclusion </th>
                     <th colSpan={2}> 
-                        <p> Topic D </p>
+                        <p className='subtitle is-4'> Meeting Conclusion </p>
                     </th>
                 </tr>
             </thead>
