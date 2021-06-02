@@ -3,9 +3,9 @@ import { useState, CSSProperties } from 'react'
 
 import { NavBar, SussView } from './components/NavBar'
 import { Transcription } from './views/Transcription'
+import { Summary, iSummary } from './views/Summary'
 import { Footer } from './components/Footer'
 import { Landing } from './views/Landing'
-import { Summary } from './views/Summary'
 import { Charts } from './views/Charts'
 
 import 'bulma/css/bulma.css'
@@ -26,6 +26,14 @@ const sectionStyle:CSSProperties = {
     minHeight:'calc(100vh - 180px)'
 }
 
+const summary:iSummary = {
+    title:'Meeting Title',
+    topics:['Topic A', 'Topic B', 'Topic C', 'Topic D'],
+    notes:['Note A', 'Note B', 'Note C', 'Note D'],
+    conclusion: 'Meeting Conclusion'
+}
+
+
 export const App = () => {
     const [ view, setView ] = useState<SussView>('Home')
 
@@ -36,7 +44,7 @@ export const App = () => {
             { view === 'Home' && <Landing click={() => setView('Transcript')}/> }
             { view === 'Transcript' && <Transcription /> }
             { view === 'Charts' && <Charts /> }
-            { view === 'Summary' && <Summary /> }
+            { view === 'Summary' && <Summary {...summary}/> }
         </div>
 
         <Footer/>
