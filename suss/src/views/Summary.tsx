@@ -32,7 +32,7 @@ export const Summary = ({ titles, topics, notes, conclusion }: iSummary) => {
 
     const handleChange = (newTitle:iOption|null) => {
         setTitle(newTitle || {label:''})
-        title && setEditingTitle(false)
+        if(title) process.nextTick(() => setEditingTitle(false))
     }
 
     return <div className='container' style={transcriptionStyle}>
@@ -43,9 +43,9 @@ export const Summary = ({ titles, topics, notes, conclusion }: iSummary) => {
 
         <table className="table" style={tableStyle}>
             <thead>
-                <tr onMouseEnter={() => setEditingTitle(true)} onMouseLeave={() => setEditingTitle(false)} onClick={() => setEditingTitle(true)}>
+                <tr onMouseEnter={() => setEditingTitle(true)} onMouseLeave={() => setEditingTitle(false)}>
                     <th style={{...leftTableStyle, height:68}}> Title </th>
-                    <th colSpan={2} style={{verticalAlign:'middle', borderBottom:'2px solid gray'}}> 
+                    <th colSpan={2} style={{verticalAlign:'middle', borderBottom:'2px solid gray'}} onClick={() => setEditingTitle(true)}> 
                         { !editingTitle && <p className='title is-3 has-text-centered'> { title.label } </p> }
                         { editingTitle && <CreatableSelect isClearable value={title} options={titles} onChange={handleChange}/> }
                     </th>
