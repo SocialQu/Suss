@@ -1,5 +1,5 @@
-import { CSSProperties } from "react"
-
+import CreatableSelect from 'react-select/creatable'
+import { CSSProperties, useState } from "react"
 
 const transcriptionStyle:CSSProperties = {
     fontSize:21,
@@ -18,29 +18,30 @@ const tableStyle:CSSProperties = {
 }
 
 const leftTableStyle:CSSProperties = {
+    width:200,
     color: 'white',
     background: '#222',
     verticalAlign:'middle'
 }
 
-
-export interface iSummary { title: string, topics:string[], notes:string[], conclusion:string }
-export const Summary = ({ title, topics, notes, conclusion }: iSummary) => {
+interface iOption { label:string }
+export interface iSummary { titles:iOption[], topics:string[], notes:string[], conclusion:string }
+export const Summary = ({ titles, topics, notes, conclusion }: iSummary) => {
+    const [ editTitle, setTitleEdit ] = useState(false)
 
     return <div className='container' style={transcriptionStyle}>
         <p 
             className='title is-1 has-text-centered' 
             style={{marginBottom:'1em', color: 'goldenrod'}}
-        > 
-            Meeting Summary
-        </p>
+        >  Meeting Summary </p>
 
         <table className="table" style={tableStyle}>
             <thead>
-                <tr>
-                    <th style={leftTableStyle}> Title </th>
-                    <th colSpan={2}> 
-                        <p className='title is-3 has-text-centered'> { title } </p>
+                <tr onMouseEnter={() => setTitleEdit(true)} onMouseLeave={() => setTitleEdit(false)}>
+                    <th style={{...leftTableStyle, height:68}}> Title </th>
+                    <th colSpan={2} style={{verticalAlign:'middle'}}> 
+                        { !editTitle && <p className='title is-3 has-text-centered'> { titles[0]?.label } </p> }
+                        { editTitle && <CreatableSelect isClearable options={titles} value={titles[0]} /> }
                     </th>
                 </tr>
 
