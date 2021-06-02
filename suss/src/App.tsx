@@ -28,7 +28,7 @@ const sectionStyle:CSSProperties = {
 
 const summary:iSummary = {
     titles:[{label:`Meeting's Summary`}],
-    topics:['Topic A', 'Topic B', 'Topic C', 'Topic D'],
+    topics:[[{label:'Topic A'}], [{label:'Topic B'}], [{label:'Topic C'}], [{label:'Topic D'}]],
     notes:['Note A', 'Note B', 'Note C', 'Note D'],
     conclusions: [{label:'Meeting Conclusion'}]
 }
