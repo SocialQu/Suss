@@ -25,8 +25,7 @@ const leftTableStyle:CSSProperties = {
     verticalAlign:'middle'
 }
 
-interface iOption { label:string }
-export interface iSummary { titles:iOption[], topics:string[], notes:string[], conclusions:OptionTypeBase[] }
+export interface iSummary { titles:OptionTypeBase[], topics:OptionTypeBase[][], notes:string[], conclusions:OptionTypeBase[] }
 export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
     const [ title, setTitle] = useState(titles[0])
     const [ editingTitle, setEditingTitle ] = useState(false)
@@ -34,15 +33,25 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
     const [ conclusion, setConclusion] = useState(conclusions[0])
     const [ editingConclusion, setEditingConclusion ] = useState(false)
 
-    const editTitle = (newTitle:iOption|null) => {
+    const [ selectedTopics, setSelectedTopics ] = useState(topics.map(([t]) => t))
+    const [ editingTopic, setEditingTopic ] = useState(-1)
+
+    const editTitle = (newTitle:OptionTypeBase|null) => {
         setTitle(newTitle || {label:''})
         if(newTitle) process.nextTick(() => setEditingTitle(false))
     }
 
-    const editConclusion = (newConclusion:iOption|null) => {
+    const editConclusion = (newConclusion:OptionTypeBase|null) => {
         setConclusion(newConclusion || {label:''})
         if(newConclusion) process.nextTick(() => setEditingConclusion(false))
     }
+
+    const editTopic = (topic:OptionTypeBase|null, idx:number) => {
+        const newTopics = topic ? selectedTopics.map((t, i) => i===idx ? topic : t) : selectedTopics.filter((t, i) => i !== idx)
+        setSelectedTopics(newTopics)
+        setEditingTopic(-1)
+    }
+
 
     return <div className='container' style={transcriptionStyle}>
         <p 
@@ -60,10 +69,21 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
                     </th>
                 </tr>
 
-                { topics.map((topic, i, l) => 
+                { selectedTopics.map((topic, i, l) => 
                     <tr key={i}>
-                        { !i && <th style={leftTableStyle} rowSpan={topics.length}> Topics </th> }
-                        <td colSpan={2} style={{borderBottom:i !== (l.length - 1) ? '0px' : '2px solid gray'}}> • { topic } </td>
+                        { !i && <th style={leftTableStyle} rowSpan={l.length}> Topics </th> }
+                        <td colSpan={2} style={{borderBottom:i !== (l.length - 1) ? '0px' : '2px solid gray'}} onMouseEnter={() => setEditingTopic(i)} onMouseLeave={() => setEditingTopic(-1)}>
+                            { 
+                                editingTopic !== i 
+                                ?   `• ${topic.label}` 
+                                :   <CreatableSelect 
+                                        isClearable 
+                                        options={topics[i]} 
+                                        value={selectedTopics[i]} 
+                                        onChange={(topic) => editTopic(topic, i)}
+                                    /> 
+                            }
+                        </td>
                     </tr>
                 )}
 
