@@ -11,15 +11,29 @@ const linearSummary = (sentences:iSentence[]) => {
 
     const fit = solve(embeddings, order).to2DArray()
     const predictions = embeddings.map(x => 
-        Matrix.multiply(x.map(i => [i]), fit).to2DArray()[0]
+        Matrix.multiply(x.map(i => [i]), fit).sum()
     )
 
-    const similarities = predictions.map((z,i) => getSimilarity(order[i], z))
-    const min = similarities.reduce((d, min, idx) => d.min > min ? { idx, min } : d, {idx:0, min:similarities[0]})
-    const { text } = sentences[min.idx]
-    console.log(min.idx, text)
+    const similarities = sentences.map((sentence,i) => ({
+        order:i,
+        ...sentence,
+        similarity:getSimilarity(order[i], [predictions[i]])
+    })).sort(({ similarity:a }, { similarity:b }) => a > b ? 1 : -1)
 
+
+    const sorted = [...similarities].sort(({ similarity:a }, { similarity:b }) => a > b ? 1 : -1)
+    const breakpoint = Math.round(sentences.length * .02)
+    const minSimilarity = sorted[breakpoint].similarity
+
+    const summary = similarities.filter(({ similarity }) => similarity < minSimilarity)
+        .sort(({ order:a }, { order:b }) => a > b ? 1 : -1)
+        .map(({ text, order, similarity }) => ({text, order, similarity}))
+
+
+
+    console.log(summary.map(({ order, text, similarity }) => [order, text, similarity]))
+    return summary
 }
 
-linearSummary(sentences)
 
+linearSummary(sentences as iSentence[])
