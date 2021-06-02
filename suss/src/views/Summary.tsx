@@ -23,7 +23,9 @@ const leftTableStyle:CSSProperties = {
     verticalAlign:'middle'
 }
 
-export const Summary = () => {
+
+export interface iSummary { title: string, topics:string[], notes:string[], conclusion:string }
+export const Summary = ({ title, topics, notes, conclusion }: iSummary) => {
 
     return <div className='container' style={transcriptionStyle}>
         <p 
@@ -38,42 +40,28 @@ export const Summary = () => {
                 <tr>
                     <th style={leftTableStyle}> Title </th>
                     <th colSpan={2}> 
-                        <p className='title is-3 has-text-centered'> Meeting Tittle </p>
+                        <p className='title is-3 has-text-centered'> { title } </p>
                     </th>
                 </tr>
 
-                <tr>
-                    <th style={leftTableStyle} rowSpan={4}> Topics </th>
-                    <td colSpan={2} style={{borderWidth:0}}> • Topic A </td>
-                </tr>
-                <tr>
-                    <td colSpan={2} style={{borderWidth:0}}> • Topic B </td>
-                </tr>
-                <tr>
-                    <td colSpan={2} style={{borderWidth:0}}> • Topic C </td>
-                </tr>
-                <tr>
-                    <td colSpan={2}> • Topic D </td>
-                </tr>
+                { topics.map((topic, i) => 
+                    <tr key={i}>
+                        { !i && <th style={leftTableStyle} rowSpan={topics.length}> Topics </th> }
+                        <td colSpan={2} style={{borderWidth:0}}> • { topic } </td>
+                    </tr>
+                )}
 
-                <tr>
-                    <th style={leftTableStyle} rowSpan={4}> • Notes </th>
-                    <td colSpan={2} style={{borderWidth:0}}> • Note A </td>
-                </tr>
-                <tr>
-                    <td colSpan={2} style={{borderWidth:0}}> • Note B </td>
-                </tr>
-                <tr>
-                    <td colSpan={2} style={{borderWidth:0}}> • Note C </td>
-                </tr>
-                <tr>
-                    <td colSpan={2}> • Note D </td>
-                </tr>
+                { notes.map((note, i) => 
+                    <tr key={i}>
+                        { !i && <th style={leftTableStyle} rowSpan={notes.length}> Notes </th> }
+                        <td colSpan={2} style={{borderWidth:0}}> • { note } </td>
+                    </tr>
+                )}
 
                 <tr>
                     <th style={leftTableStyle}> Conclusion </th>
                     <th colSpan={2}> 
-                        <p className='subtitle is-4'> Meeting Conclusion </p>
+                        <p className='subtitle is-4'> { conclusion } </p>
                     </th>
                 </tr>
             </thead>
