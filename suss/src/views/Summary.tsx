@@ -27,8 +27,10 @@ const leftTableStyle:CSSProperties = {
 interface iOption { label:string }
 export interface iSummary { titles:iOption[], topics:string[], notes:string[], conclusion:string }
 export const Summary = ({ titles, topics, notes, conclusion }: iSummary) => {
-    const [ editTitle, setTitleEdit ] = useState(false)
+    const [ title, setTitle] = useState(titles[0])
+    const [ editingTitle, setEditingTitle ] = useState(false)
 
+    const handleChange = (newTitle:iOption|null) => setTitle(newTitle || {label:''})
     return <div className='container' style={transcriptionStyle}>
         <p 
             className='title is-1 has-text-centered' 
@@ -37,11 +39,11 @@ export const Summary = ({ titles, topics, notes, conclusion }: iSummary) => {
 
         <table className="table" style={tableStyle}>
             <thead>
-                <tr onMouseEnter={() => setTitleEdit(true)} onMouseLeave={() => setTitleEdit(false)}>
+                <tr onMouseEnter={() => setEditingTitle(true)} onMouseLeave={() => setEditingTitle(false)}>
                     <th style={{...leftTableStyle, height:68}}> Title </th>
                     <th colSpan={2} style={{verticalAlign:'middle'}}> 
-                        { !editTitle && <p className='title is-3 has-text-centered'> { titles[0]?.label } </p> }
-                        { editTitle && <CreatableSelect isClearable options={titles} value={titles[0]} /> }
+                        { !editingTitle && <p className='title is-3 has-text-centered'> { title.label } </p> }
+                        { editingTitle && <CreatableSelect isClearable value={title} options={titles} onChange={handleChange}/> }
                     </th>
                 </tr>
 
