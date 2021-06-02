@@ -1,5 +1,6 @@
 import CreatableSelect from 'react-select/creatable'
 import { CSSProperties, useState } from "react"
+import { OptionTypeBase } from 'react-select'
 
 const transcriptionStyle:CSSProperties = {
     fontSize:21,
@@ -25,14 +26,22 @@ const leftTableStyle:CSSProperties = {
 }
 
 interface iOption { label:string }
-export interface iSummary { titles:iOption[], topics:string[], notes:string[], conclusion:string }
-export const Summary = ({ titles, topics, notes, conclusion }: iSummary) => {
+export interface iSummary { titles:iOption[], topics:string[], notes:string[], conclusions:OptionTypeBase[] }
+export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
     const [ title, setTitle] = useState(titles[0])
     const [ editingTitle, setEditingTitle ] = useState(false)
 
-    const handleChange = (newTitle:iOption|null) => {
+    const [ conclusion, setConclusion] = useState(conclusions[0])
+    const [ editingConclusion, setEditingConclusion ] = useState(false)
+
+    const editTitle = (newTitle:iOption|null) => {
         setTitle(newTitle || {label:''})
-        if(title) process.nextTick(() => setEditingTitle(false))
+        if(newTitle) process.nextTick(() => setEditingTitle(false))
+    }
+
+    const editConclusion = (newConclusion:iOption|null) => {
+        setConclusion(newConclusion || {label:''})
+        if(newConclusion) process.nextTick(() => setEditingConclusion(false))
     }
 
     return <div className='container' style={transcriptionStyle}>
@@ -47,7 +56,7 @@ export const Summary = ({ titles, topics, notes, conclusion }: iSummary) => {
                     <th style={{...leftTableStyle, height:68}}> Title </th>
                     <th colSpan={2} style={{verticalAlign:'middle', borderBottom:'2px solid gray'}} onClick={() => setEditingTitle(true)}> 
                         { !editingTitle && <p className='title is-3 has-text-centered'> { title.label } </p> }
-                        { editingTitle && <CreatableSelect isClearable value={title} options={titles} onChange={handleChange}/> }
+                        { editingTitle && <CreatableSelect isClearable value={title} options={titles} onChange={editTitle}/> }
                     </th>
                 </tr>
 
@@ -65,10 +74,11 @@ export const Summary = ({ titles, topics, notes, conclusion }: iSummary) => {
                     </tr>
                 )}
 
-                <tr>
+                <tr onMouseEnter={() => setEditingConclusion(true)} onMouseLeave={() => setEditingConclusion(false)}>
                     <th style={leftTableStyle}> Conclusion </th>
-                    <th colSpan={2}> 
-                        <p className='subtitle is-4'> { conclusion } </p>
+                    <th colSpan={2} onClick={() => setEditingConclusion(true)}> 
+                        { !editingConclusion && <p className='subtitle is-4'> { conclusion.label } </p> }
+                        { editingConclusion && <CreatableSelect isClearable value={conclusion} options={conclusions} onChange={editConclusion}/> }
                     </th>
                 </tr>
             </thead>
