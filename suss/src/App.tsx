@@ -30,7 +30,7 @@ const summary:iSummary = {
     titles:[{label:`Meeting's Summary`}],
     topics:['Topic A', 'Topic B', 'Topic C', 'Topic D'],
     notes:['Note A', 'Note B', 'Note C', 'Note D'],
-    conclusion: 'Meeting Conclusion'
+    conclusions: [{label:'Meeting Conclusion'}]
 }
 
 
