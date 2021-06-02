@@ -59,6 +59,14 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
     }
 
     const editTopic = (topic:OptionTypeBase|null, idx:number) => {
+        if(idx === Infinity){
+            const newTopics = [...selectedTopics, topic as OptionTypeBase]
+            setSelectedTopics(newTopics)
+            setEditingTopic(-1)
+            return
+        }
+
+
         const newTopics = topic 
             ? selectedTopics.map((t, i) => i===idx ? topic : t) 
             : selectedTopics.filter((t, i) => i !== idx)
@@ -92,12 +100,12 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
 
                 { selectedTopics.map((topic, i, l) => 
                     <tr key={i}>
-                        { !i && <th style={leftTableStyle} rowSpan={l.length}> Topics </th> }
+                        { !i && <th style={leftTableStyle} rowSpan={l.length + 1}> Topics </th> }
                         <td 
                             colSpan={2} 
                             onMouseEnter={() => setEditingTopic(i)} 
                             onMouseLeave={() => setEditingTopic(-1)}
-                            style={{...tdStyle, borderBottom:i !== (l.length - 1) ? '0px' : '2px solid gray'}} 
+                            style={{borderBottom:0}} 
                         >
                             { 
                                 editingTopic !== i 
@@ -112,6 +120,23 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
                         </td>
                     </tr>
                 )}
+                <tr>
+                    <td 
+                        colSpan={2}
+                        style={{borderBottom:'2px solid gray'}} 
+                        onMouseLeave={() => setEditingTopic(-1)}
+                        onMouseEnter={() => setEditingTopic(selectedTopics.length + 1)}
+                    > 
+                        { 
+                            editingTopic !== selectedTopics.length + 1
+                            ?   <a> Add Topic </a>
+                            :   <CreatableSelect 
+                                    onChange={(topic) => editTopic(topic, Infinity)}
+                                    options={topics[selectedTopics.length + 1] || []} 
+                                /> 
+                        }
+                    </td>
+                </tr>
 
                 { selectedNotes.map((note, i, l) => 
                     <tr key={i}>
@@ -120,12 +145,12 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
                             colSpan={2} 
                             onMouseEnter={() => setEditingNotes(i)} 
                             onMouseLeave={() => setEditingNotes(-1)}
-                            style={{...tdStyle, borderBottom:i !== (l.length - 1) ? '0px' : '2px solid gray'}} 
+                            style={{borderBottom:i !== (l.length - 1) ? '0px' : '2px solid gray'}} 
                         >
                             { 
                                 editingNotes !== i 
                                 ?   `• ${note.label}` 
-                                :   <CreatableSelect 
+                                :   <CreatableSelect
                                         isClearable 
                                         options={notes[i]} 
                                         value={selectedTopics[i]} 
