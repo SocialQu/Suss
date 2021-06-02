@@ -30,7 +30,11 @@ export const Summary = ({ titles, topics, notes, conclusion }: iSummary) => {
     const [ title, setTitle] = useState(titles[0])
     const [ editingTitle, setEditingTitle ] = useState(false)
 
-    const handleChange = (newTitle:iOption|null) => setTitle(newTitle || {label:''})
+    const handleChange = (newTitle:iOption|null) => {
+        setTitle(newTitle || {label:''})
+        title && setEditingTitle(false)
+    }
+
     return <div className='container' style={transcriptionStyle}>
         <p 
             className='title is-1 has-text-centered' 
@@ -39,25 +43,25 @@ export const Summary = ({ titles, topics, notes, conclusion }: iSummary) => {
 
         <table className="table" style={tableStyle}>
             <thead>
-                <tr onMouseEnter={() => setEditingTitle(true)} onMouseLeave={() => setEditingTitle(false)}>
+                <tr onMouseEnter={() => setEditingTitle(true)} onMouseLeave={() => setEditingTitle(false)} onClick={() => setEditingTitle(true)}>
                     <th style={{...leftTableStyle, height:68}}> Title </th>
-                    <th colSpan={2} style={{verticalAlign:'middle'}}> 
+                    <th colSpan={2} style={{verticalAlign:'middle', borderBottom:'2px solid gray'}}> 
                         { !editingTitle && <p className='title is-3 has-text-centered'> { title.label } </p> }
                         { editingTitle && <CreatableSelect isClearable value={title} options={titles} onChange={handleChange}/> }
                     </th>
                 </tr>
 
-                { topics.map((topic, i) => 
+                { topics.map((topic, i, l) => 
                     <tr key={i}>
                         { !i && <th style={leftTableStyle} rowSpan={topics.length}> Topics </th> }
-                        <td colSpan={2} style={{borderWidth:0}}> • { topic } </td>
+                        <td colSpan={2} style={{borderBottom:i !== (l.length - 1) ? '0px' : '2px solid gray'}}> • { topic } </td>
                     </tr>
                 )}
 
-                { notes.map((note, i) => 
+                { notes.map((note, i, l) => 
                     <tr key={i}>
                         { !i && <th style={leftTableStyle} rowSpan={notes.length}> Notes </th> }
-                        <td colSpan={2} style={{borderWidth:0}}> • { note } </td>
+                        <td colSpan={2} style={{borderBottom:i !== (l.length - 1) ? '0px' : '2px solid gray'}}> • { note } </td>
                     </tr>
                 )}
 
