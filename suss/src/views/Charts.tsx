@@ -6,7 +6,7 @@ export const Charts = () => {
         <p 
             className='title is-1 has-text-centered' 
             style={{color: 'white', marginBottom:'1em'}}
-        > Meeting's Charts </p>
+        > Meeting Charts </p>
 
         <div>
             <Scatter 
