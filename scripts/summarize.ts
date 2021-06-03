@@ -12,15 +12,19 @@ interface iSummary {
 }
 
 
-const summarize = (text:string):iSummary => {
-    return {
-        titles:[],
-        topics:[],
-        notes:[],
-        conclusions:{
-            beginning:[],
-            middle:[],
-            end:[]
-        }
-    }
-}
+const getTitles = ():string[] => []
+const getTopics = ():string[][] => []
+const getNotes = ():string[] => []
+const getConclusion = ():iConclusion => ({
+    beginning:[],
+    middle:[],
+    end:[]
+})
+
+
+const summarize = (text:string):iSummary => ({
+    titles:getTitles(),
+    topics:getTopics(),
+    notes:getNotes(),
+    conclusions:getConclusion()
+})
