@@ -48,6 +48,7 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
 
     const [ selectedNotes, setSelectedNotes ] = useState(notes.map(([n]) => n))
     const [ editingNotes, setEditingNotes ] = useState(-1)
+    const [ isAddingNote, setAddingNote ] = useState(false)
 
     const [ editingTable, setEditingTable ] = useState(false)
 
@@ -55,10 +56,15 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
         process.nextTick(() => {
             if(editingTable){
                 if(editingTopic > -1) setAddTopic(true)
+                else if(editingTitle || editingNotes > -1) setAddTopic(false)
+
+                if(editingNotes > -1) setAddingNote(true)
+                else if(editingTopic > -1 || editingTitle) setAddingNote(false)
             }
 
             if(!editingTable){
                 setAddTopic(false)
+                setAddingNote(false)
             }
         })
     }, [editingTitle, editingTopic, editingNotes, editingTable])
@@ -94,6 +100,11 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
             : selectedNotes.filter((_, i) => i !== idx)
         setSelectedNotes(newNotes)
         setEditingNotes(-1)
+    }
+
+    const addNote = (note:OptionTypeBase) => {
+        const newNotes = [...selectedNotes, note]
+        setSelectedNotes(newNotes)
     }
 
     return <div className='container' style={transcriptionStyle}>
@@ -134,6 +145,7 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
                         </td>
                     </tr>
                 )}
+
                 <tr onMouseEnter={() => setEditingTopic(selectedTopics.length + 1)}>
                     { 
                         addTopic && <td 
@@ -156,12 +168,12 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
 
                 { selectedNotes.map((note, i, l) => 
                     <tr key={i}>
-                        { !i && <th style={leftTableStyle} rowSpan={l.length}> Notes </th> }
+                        { !i && <th style={leftTableStyle} rowSpan={l.length + 1}> Notes </th> }
                         <td 
                             colSpan={2} 
                             onMouseEnter={() => setEditingNotes(i)} 
                             onMouseLeave={() => setEditingNotes(-1)}
-                            style={{borderBottom:i !== (l.length - 1) ? '0px' : '2px solid gray'}} 
+                            style={{borderBottom: !isAddingNote && i === (l.length - 1) ? '2px solid gray' : 0}} 
                         >
                             { 
                                 editingNotes !== i 
@@ -176,6 +188,26 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
                         </td>
                     </tr>
                 )}
+
+                <tr onMouseEnter={() => setEditingNotes(selectedNotes.length + 1)}>
+                    { 
+                        isAddingNote && <td 
+                            colSpan={2}
+                            style={{borderBottom:'2px solid gray'}} 
+                            onMouseLeave={() => setEditingNotes(-1)}
+                        >
+                            {
+                                editingNotes !== selectedNotes.length + 1
+                                ?   <a> Add Note </a>
+                                :   <CreatableSelect 
+                                        placeholder={'Add Note'}
+                                        onChange={(note) => addNote(note as OptionTypeBase)}
+                                        options={notes[selectedNotes.length + 1] || []} 
+                                    />
+                            }
+                    </td>
+                    }
+                </tr>
 
                 <tr onMouseEnter={() => setEditingConclusion(true)} onMouseLeave={() => setEditingConclusion(false)}>
                     <th style={leftTableStyle}> Conclusion </th>
