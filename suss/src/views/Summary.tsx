@@ -1,5 +1,5 @@
 import CreatableSelect from 'react-select/creatable'
-import { CSSProperties, useState } from "react"
+import { CSSProperties, useEffect, useState } from "react"
 import { OptionTypeBase } from 'react-select'
 
 const transcriptionStyle:CSSProperties = {
@@ -44,9 +44,24 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
 
     const [ selectedTopics, setSelectedTopics ] = useState(topics.map(([t]) => t))
     const [ editingTopic, setEditingTopic ] = useState(-1)
+    const [ addTopic, setAddTopic ] = useState(false)
 
     const [ selectedNotes, setSelectedNotes ] = useState(notes.map(([n]) => n))
     const [ editingNotes, setEditingNotes ] = useState(-1)
+
+    const [ editingTable, setEditingTable ] = useState(false)
+
+    useEffect(() => { 
+        process.nextTick(() => {
+            if(editingTable){
+                if(editingTopic > -1) setAddTopic(true)
+            }
+
+            if(!editingTable){
+                setAddTopic(false)
+            }
+        })
+    }, [editingTitle, editingTopic, editingNotes, editingTable])
 
     const editTitle = (newTitle:OptionTypeBase|null) => {
         setTitle(newTitle || {label:''})
@@ -66,7 +81,6 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
             return
         }
 
-
         const newTopics = topic 
             ? selectedTopics.map((t, i) => i===idx ? topic : t) 
             : selectedTopics.filter((t, i) => i !== idx)
@@ -77,7 +91,7 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
     const editNotes = (note:OptionTypeBase|null, idx:number) => {
         const newNotes = note 
             ? selectedNotes.map((t, i) => i===idx ? note : t) 
-            : selectedNotes.filter((t, i) => i !== idx)
+            : selectedNotes.filter((_, i) => i !== idx)
         setSelectedNotes(newNotes)
         setEditingNotes(-1)
     }
@@ -88,7 +102,7 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
             style={{marginBottom:'1em', color: 'goldenrod'}}
         >  Meeting Summary </p>
 
-        <table className="table" style={tableStyle}>
+        <table className="table" style={tableStyle} onMouseEnter={() => setEditingTable(true)} onMouseLeave={() => setEditingTable(false)}>
             <thead>
                 <tr onMouseEnter={() => setEditingTitle(true)} onMouseLeave={() => setEditingTitle(false)}>
                     <th style={{...leftTableStyle, height:68}}> Title </th>
@@ -105,10 +119,10 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
                             colSpan={2} 
                             onMouseEnter={() => setEditingTopic(i)} 
                             onMouseLeave={() => setEditingTopic(-1)}
-                            style={{borderBottom:0}} 
+                            style={{borderBottom: !addTopic && i === (l.length - 1) ? '2px solid gray' : 0}} 
                         >
                             { 
-                                editingTopic !== i 
+                                editingTopic !== i
                                 ?   `• ${topic.label}` 
                                 :   <CreatableSelect 
                                         isClearable 
@@ -120,22 +134,24 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
                         </td>
                     </tr>
                 )}
-                <tr>
-                    <td 
-                        colSpan={2}
-                        style={{borderBottom:'2px solid gray'}} 
-                        onMouseLeave={() => setEditingTopic(-1)}
-                        onMouseEnter={() => setEditingTopic(selectedTopics.length + 1)}
-                    > 
-                        { 
-                            editingTopic !== selectedTopics.length + 1
-                            ?   <a> Add Topic </a>
-                            :   <CreatableSelect 
-                                    onChange={(topic) => editTopic(topic, Infinity)}
-                                    options={topics[selectedTopics.length + 1] || []} 
-                                /> 
-                        }
+                <tr onMouseEnter={() => setEditingTopic(selectedTopics.length + 1)}>
+                    { 
+                        addTopic && <td 
+                            colSpan={2}
+                            style={{borderBottom:'2px solid gray'}} 
+                            onMouseLeave={() => setEditingTopic(-1)}
+                        >
+                            {
+                                editingTopic !== selectedTopics.length + 1
+                                ?   <a> New Topic </a>
+                                :   <CreatableSelect 
+                                        placeholder={'Add Topic'}
+                                        onChange={(topic) => editTopic(topic, Infinity)}
+                                        options={topics[selectedTopics.length + 1] || []} 
+                                    />
+                            }
                     </td>
+                    }
                 </tr>
 
                 { selectedNotes.map((note, i, l) => 
