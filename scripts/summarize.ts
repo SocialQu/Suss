@@ -32,10 +32,10 @@ interface iClustered { clusters:number[], centroids:iCentroid[] }
 const getTopics = (sentences:iSentence[]):string[][] => {
     const embeddings = sentences.map(({embeddings}) => embeddings)
     const { clusters, centroids }:iClustered = kmeans(embeddings, 5)
-    sentences.map((s,i) => ({...s, cluster:clusters[i]}))
+    const clustered = sentences.map((s,i) => ({...s, cluster:clusters[i]}))
 
     const topics = centroids.map(({ centroid }, i) => {
-        const filtered = sentences.filter(({ cluster }) => cluster === i)
+        const filtered = clustered.filter(({ cluster }) => cluster === i)
         const similarities = filtered.map((s, i) => ({ ...s, similarity:getSimilarity(s.embeddings, centroid)}))
         const sorted = [...similarities].sort(({ similarity: a }, { similarity: b }) => a > b ? 1 : -1)
         const topSentences = sorted.filter((_, i) => i < 5)
