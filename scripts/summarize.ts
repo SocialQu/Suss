@@ -21,8 +21,6 @@ const getTitles = (sentences:iSentence[]):string[] => {
     const similarities = sentences.map((s, i) => ({ ...s, similarity:getSimilarity(s.embeddings, center)}))
     const sortedSentences = [...similarities].sort(({ similarity:a }, { similarity:b }) => a > b ? 1 : -1)
     const topSentences = sortedSentences.filter((_, i) => i < 10)
-    // topSentences.map(({ order, text, similarity }) => console.log(order, text, similarity ))
-
     const titles = topSentences.map(({ text }) => text)
     return titles
 }
@@ -48,8 +46,8 @@ const getTopics = (sentences:iSentence[]):string[][] => {
 
 const getNotes = (sentences:iSentence[], words:string[]):string[] => {
     const dictionary = getDictionary(words)
-    const informed = sentences.map(s => ({...s, information:getInformation({ words, dictionary, tokens:words.length})}))
-    const sorted = [...informed].sort(({ information: a }, { information: b }) => a > b ? 1 : -1)
+    const informed = sentences.map(s => ({...s, information:getInformation({ words:s.text.split(' '), dictionary, tokens:words.length})}))
+    const sorted = [...informed].sort(({ information: a }, { information: b }) => a < b ? 1 : -1)
     const mostInformed = sorted.filter((_, i) => i < 12).map(({ text }) => text)
     return mostInformed
 }
