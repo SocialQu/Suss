@@ -1,19 +1,7 @@
 import { getSimilarity, getDictionary, getEmbeddings, getInformation } from "./utils"
+import { Matrix, solve } from 'ml-matrix'
+
 const kmeans = require('ml-kmeans')
-
-
-interface iConclusion {
-    beginning:string[]
-    middle:string[]
-    end:string[]
-}
-
-interface iSummary {
-    titles: string[]
-    topics: string[][]
-    notes: string[]
-    conclusions: iConclusion
-}
 
 interface iSentence {
     text:string
@@ -22,19 +10,6 @@ interface iSentence {
     information?:number
     embeddings:number[]
 }
-
-
-interface iCentroid {
-    centroid:number[]
-    error:number
-    size:number
-}
-
-interface iClustered {
-    clusters:number[]
-    centroids:iCentroid[]
-}
-
 
 const getTitles = (sentences:iSentence[]):string[] => {
     const center:number[] = [] // TODO: Search for center.
@@ -46,6 +21,8 @@ const getTitles = (sentences:iSentence[]):string[] => {
     return titles
 }
 
+interface iCentroid { centroid:number[], error:number, size:number }
+interface iClustered { clusters:number[], centroids:iCentroid[] }
 const getTopics = (sentences:iSentence[]):string[][] => {
     const embeddings = sentences.map(({embeddings}) => embeddings)
     const { clusters, centroids }:iClustered = kmeans(embeddings, 5)
@@ -72,29 +49,59 @@ const getNotes = (sentences:iSentence[], words:string[]):string[] => {
 }
 
 
-const getConclusion = ():iConclusion => ({
-    beginning:[],
-    middle:[],
-    end:[]
-})
+
+interface iConclusion { beginning:string[], middle:string[], end:string[] }
+const getConclusion = (sentences:iSentence[]):iConclusion => {
+    const embeddings = sentences.map(({ embeddings }) => embeddings )
+    const order = [...Array(embeddings.length)].map((_,i) => [i])
+
+    const fit = solve(embeddings, order).to2DArray()
+    const predictions = embeddings.map(x => Matrix.multiply(x.map(i => [i]), fit).sum())
+
+    interface iSimilarity extends iSentence { similarity:number }
+    const similarities:iSimilarity[] = sentences.map((sentence,i) => ({
+        ...sentence,
+        similarity:getSimilarity(order[i], [predictions[i]])
+    }))
+
+    const beginning = similarities.filter((s, i) => i < sentences.length/3)
+    const middle = similarities.filter((s, i) => i < sentences.length/3 && i < sentences.length/3*2)
+    const end = similarities.filter((s, i) => i > sentences.length/3*2)
+
+    const getTop = (sentences:iSimilarity[]) => {
+        const sorted = [...sentences].sort(({ similarity: a }, { similarity: b }) => a > b ? 1 : -1)
+        const top = sorted.filter((_, i) => i < 5).map(({ text }) => text)
+        return top
+    }
+    
+    return {
+        beginning:getTop(beginning),
+        middle:getTop(middle),
+        end:getTop(end)
+    }
+}
 
 
+
+interface iSummary {
+    titles: string[]
+    topics: string[][]
+    notes: string[]
+    conclusions: iConclusion
+}
 const summarize = async(transcript:string):Promise<iSummary> => {
     const words = transcript.split(/[\s\n]+/)
     const tokens = transcript.split('\n')
     const embeddings = await getEmbeddings(tokens)
-    const sentences:iSentence[] = tokens.map((text, order) => ({
-        text,
-        order,
-        embeddings:embeddings[order]
-    }))
+    const sentences:iSentence[] = tokens.map((text, order) => ({ text, order, embeddings:embeddings[order] }))
 
     return {
         titles:getTitles(sentences),
         topics:getTopics(sentences),
         notes:getNotes(sentences, words),
-        conclusions:getConclusion()
+        conclusions:getConclusion(sentences)
     }
 }
+
 
 summarize('')
