@@ -1,5 +1,10 @@
-import { getSimilarity, getDictionary, getEmbeddings, getInformation } from "./utils"
+/*
+npx ts-node summarize
+*/
+
+import { getSimilarity, getDictionary, getEmbeddings, getInformation, findCenter } from "./utils"
 import { Matrix, solve } from 'ml-matrix'
+import { transcript } from './data'
 
 const kmeans = require('ml-kmeans')
 
@@ -12,10 +17,11 @@ interface iSentence {
 }
 
 const getTitles = (sentences:iSentence[]):string[] => {
-    const center:number[] = [] // TODO: Search for center.
+    const center:number[] = findCenter(sentences.map(({ embeddings }) => embeddings))
     const similarities = sentences.map((s, i) => ({ ...s, similarity:getSimilarity(s.embeddings, center)}))
     const sortedSentences = [...similarities].sort(({ similarity:a }, { similarity:b }) => a > b ? 1 : -1)
     const topSentences = sortedSentences.filter((_, i) => i < 10)
+    // topSentences.map(({ order, text, similarity }) => console.log(order, text, similarity ))
 
     const titles = topSentences.map(({ text }) => text)
     return titles
@@ -83,12 +89,7 @@ const getConclusion = (sentences:iSentence[]):iConclusion => {
 
 
 
-interface iSummary {
-    titles: string[]
-    topics: string[][]
-    notes: string[]
-    conclusions: iConclusion
-}
+interface iSummary { titles: string[], topics: string[][], notes: string[], conclusions: iConclusion }
 const summarize = async(transcript:string):Promise<iSummary> => {
     const words = transcript.split(/[\s\n]+/)
     const tokens = transcript.split('\n')
@@ -104,4 +105,14 @@ const summarize = async(transcript:string):Promise<iSummary> => {
 }
 
 
-summarize('')
+summarize(transcript).then(console.log).catch(console.log)
+
+
+/* Tests
+
+1. The titles have the greatest overall similarity. (Pass)
+2. There are 5 top sentences by topic.
+3. The notes have the most information.
+4. Beggining, Middle & End similarity. 
+
+*/
