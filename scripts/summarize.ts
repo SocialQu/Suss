@@ -1,4 +1,4 @@
-import { getSimilarity, getDictionary, getEmbeddings } from "./utils"
+import { getSimilarity, getDictionary, getEmbeddings, getInformation } from "./utils"
 const kmeans = require('ml-kmeans')
 
 
@@ -19,6 +19,7 @@ interface iSentence {
     text:string
     order:number
     cluster?:number
+    information?:number
     embeddings:number[]
 }
 
@@ -62,8 +63,15 @@ const getTopics = (sentences:iSentence[]):string[][] => {
 }
 
 
+const getNotes = (sentences:iSentence[], words:string[]):string[] => {
+    const dictionary = getDictionary(words)
+    const informed = sentences.map(s => ({...s, information:getInformation({ words, dictionary, tokens:words.length})}))
+    const sorted = [...informed].sort(({ information: a }, { information: b }) => a > b ? 1 : -1)
+    const mostInformed = sorted.filter((_, i) => i < 12).map(({ text }) => text)
+    return mostInformed
+}
 
-const getNotes = ():string[] => []
+
 const getConclusion = ():iConclusion => ({
     beginning:[],
     middle:[],
@@ -81,11 +89,10 @@ const summarize = async(transcript:string):Promise<iSummary> => {
         embeddings:embeddings[order]
     }))
 
-    const dictionary = getDictionary(words)
     return {
         titles:getTitles(sentences),
         topics:getTopics(sentences),
-        notes:getNotes(),
+        notes:getNotes(sentences, words),
         conclusions:getConclusion()
     }
 }
