@@ -5,6 +5,7 @@ npx ts-node summarize
 import { getSimilarity, getDictionary, getEmbeddings, getInformation, findCenter } from "./utils"
 import { Matrix, solve } from 'ml-matrix'
 import { transcript } from './data'
+import { PCA } from "ml-pca"
 
 const kmeans = require('ml-kmeans')
 
@@ -43,7 +44,6 @@ const getTopics = (sentences:iSentence[]):string[][] => {
     return topics
 }
 
-
 const getNotes = (sentences:iSentence[], words:string[]):string[] => {
     const dictionary = getDictionary(words)
     const informed = sentences.map(s => ({...s, information:getInformation({ words:s.text.split(' '), dictionary, tokens:words.length})}))
@@ -53,14 +53,17 @@ const getNotes = (sentences:iSentence[], words:string[]):string[] => {
 }
 
 
-
 interface iConclusion { beginning:string[], middle:string[], end:string[] }
 const getConclusion = (sentences:iSentence[]):iConclusion => {
     const embeddings = sentences.map(({ embeddings }) => embeddings )
     const order = [...Array(embeddings.length)].map((_,i) => [i])
 
-    const fit = solve(embeddings, order).to2DArray()
-    const predictions = embeddings.map(x => Matrix.multiply(x.map(i => [i]), fit).sum())
+    const pca = new PCA(embeddings)
+    const reduced = pca.predict(embeddings, { nComponents:2 }).to2DArray()
+
+    const fit = solve(reduced, order).to2DArray()
+
+    const predictions = reduced.map(x => Matrix.multiply(x.map(i => [i]), fit).sum())
 
     interface iSimilarity extends iSentence { similarity:number }
     const similarities:iSimilarity[] = sentences.map((sentence,i) => ({
@@ -68,9 +71,9 @@ const getConclusion = (sentences:iSentence[]):iConclusion => {
         similarity:getSimilarity(order[i], [predictions[i]])
     }))
 
-    const beginning = similarities.filter((s, i) => i < sentences.length/3)
-    const middle = similarities.filter((s, i) => i < sentences.length/3 && i < sentences.length/3*2)
-    const end = similarities.filter((s, i) => i > sentences.length/3*2)
+    const beginning = similarities.filter((_, i, l) => i < l.length/3)
+    const middle = similarities.filter((_, i, l) => i > l.length/3 && i < l.length*2/3)
+    const end = similarities.filter((_, i, l) => i > l.length*2/3)
 
     const getTop = (sentences:iSimilarity[]) => {
         const sorted = [...sentences].sort(({ similarity: a }, { similarity: b }) => a > b ? 1 : -1)
@@ -84,7 +87,6 @@ const getConclusion = (sentences:iSentence[]):iConclusion => {
         end:getTop(end)
     }
 }
-
 
 
 interface iSummary { titles: string[], topics: string[][], notes: string[], conclusions: iConclusion }
