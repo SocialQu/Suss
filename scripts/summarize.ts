@@ -56,7 +56,7 @@ const getNotes = (sentences:iSentence[], words:string[]):string[] => {
 interface iConclusion { beginning:string[], middle:string[], end:string[] }
 const getConclusion = (sentences:iSentence[]):iConclusion => {
     const embeddings = sentences.map(({ embeddings }) => embeddings )
-    const order = [...Array(embeddings.length)].map((_,i) => [i])
+    const order = [...Array(embeddings.length)].map((_,i) => [Math.floor(i/(embeddings.length/3))])
 
     const pca = new PCA(embeddings)
     const reduced = pca.predict(embeddings, { nComponents:2 }).to2DArray()
