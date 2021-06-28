@@ -17,10 +17,11 @@ const transcriptStyle:CSSProperties = {
     minHeight:'calc(100vh - 80px - 100px - 4em - 1em - 100px)'
 }
 
-export const Transcription = () => {
+
+export const Transcription = ({ summarize }:{ summarize(sentences:string[]):void }) => {
     const { transcript, interimTranscript, finalTranscript } = useSpeechRecognition({ clearTranscriptOnListen:true })
     const [ isListening, setIsListening ] = useState(false)
-    const [ , setSentences ] = useState<string[]>([])
+    const [ sentences, setSentences ] = useState<string[]>([])
 
     useEffect(() => {
         const newTranscript = interimTranscript.replace(finalTranscript, '')
@@ -42,6 +43,7 @@ export const Transcription = () => {
     const stop = () => {
         setIsListening(false)
         SpeechRecognition.stopListening()
+        summarize(sentences)
     }
   
     return <div className='container' style={transcriptionStyle}>
