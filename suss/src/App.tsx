@@ -12,15 +12,6 @@ import 'bulma/css/bulma.css'
 import './App.css'
 
 
-
-const connectMongo = async() => {
-    const REALM_APP_ID = 'tasktracker-kjrie'
-    const app = new RealmApp({ id: REALM_APP_ID })
-    const user: User = await app.logIn(Credentials.anonymous())
-    return user
-}
-
-
 const sectionStyle:CSSProperties = {
     paddingBottom:0,
     minHeight:'calc(100vh - 180px)'
