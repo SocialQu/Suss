@@ -1,9 +1,9 @@
-import { App as RealmApp, User, Credentials } from 'realm-web'
 import { useState, CSSProperties } from 'react'
+import { getSummary, iSummary } from './scripts/summarize'
 
 import { NavBar, SussView } from './components/NavBar'
 import { Transcription } from './views/Transcription'
-import { Summary, iSummary } from './views/Summary'
+import { Summary } from './views/Summary'
 import { Footer } from './components/Footer'
 import { Landing } from './views/Landing'
 import { Charts } from './views/Charts'
@@ -17,25 +17,25 @@ const sectionStyle:CSSProperties = {
     minHeight:'calc(100vh - 180px)'
 }
 
-const summary:iSummary = {
-    titles:[{label:`Meeting's Summary`}],
-    topics:[[{label:'Topic A'}], [{label:'Topic B'}], [{label:'Topic C'}], [{label:'Topic D'}]],
-    notes:[[{label:'Note A'}], [{label:'Note B'}], [{label:'Note C'}], [{label:'Note D'}]],
-    conclusions: [{label:'Meeting Conclusion'}]
-}
-
 
 export const App = () => {
     const [ view, setView ] = useState<SussView>('Home')
+    const [ summary, setSummary ] = useState<iSummary>()
+
+    const summarize = async(sentences:string[]) => { 
+        const summary = await getSummary(sentences)
+        setSummary(summary)
+        setView('Summary')
+    }
 
 	return <>
         <NavBar click={(view) => setView(view)}/>
 
         <div className='section' style={sectionStyle}>
             { view === 'Home' && <Landing click={() => setView('Transcript')}/> }
-            { view === 'Transcript' && <Transcription /> }
+            { view === 'Transcript' && <Transcription summarize={summarize}/> }
             { view === 'Charts' && <Charts /> }
-            { view === 'Summary' && <Summary {...summary} /> }
+            { view === 'Summary' && summary && <Summary {...summary} /> }
         </div>
 
         <Footer/>
