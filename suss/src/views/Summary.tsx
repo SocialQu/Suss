@@ -1,6 +1,7 @@
 import CreatableSelect from 'react-select/creatable'
 import { CSSProperties, useEffect, useState } from "react"
 import { OptionTypeBase } from 'react-select'
+import { iSummary } from '../scripts/summarize'
 
 const transcriptionStyle:CSSProperties = {
     fontSize:21,
@@ -25,28 +26,19 @@ const leftTableStyle:CSSProperties = {
     verticalAlign:'middle'
 }
 
-const tdStyle:CSSProperties = { height:68, verticalAlign:'middle' }
-
-
-export interface iSummary { 
-    titles:OptionTypeBase[]
-    topics:OptionTypeBase[][]
-    notes:OptionTypeBase[][]
-    conclusions:OptionTypeBase[] 
-}
 
 export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
     const [ title, setTitle] = useState(titles[0])
     const [ editingTitle, setEditingTitle ] = useState(false)
 
-    const [ conclusion, setConclusion] = useState(conclusions[0])
+    const [ conclusion, setConclusion] = useState(conclusions[0].options[0])
     const [ editingConclusion, setEditingConclusion ] = useState(false)
 
     const [ selectedTopics, setSelectedTopics ] = useState(topics.map(([t]) => t))
     const [ editingTopic, setEditingTopic ] = useState(-1)
     const [ addTopic, setAddTopic ] = useState(false)
 
-    const [ selectedNotes, setSelectedNotes ] = useState(notes.map(([n]) => n))
+    const [ selectedNotes, setSelectedNotes ] = useState(notes.map(n => n))
     const [ editingNotes, setEditingNotes ] = useState(-1)
     const [ isAddingNote, setAddingNote ] = useState(false)
 
@@ -180,7 +172,7 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
                                 ?   `• ${note.label}` 
                                 :   <CreatableSelect
                                         isClearable 
-                                        options={notes[i]} 
+                                        options={notes} 
                                         value={selectedTopics[i]} 
                                         onChange={(note) => editNotes(note, i)}
                                     /> 
@@ -202,7 +194,7 @@ export const Summary = ({ titles, topics, notes, conclusions }: iSummary) => {
                                 :   <CreatableSelect 
                                         placeholder={'Add Note'}
                                         onChange={(note) => addNote(note as OptionTypeBase)}
-                                        options={notes[selectedNotes.length + 1] || []} 
+                                        options={notes.filter((n) => selectedNotes.includes(n))} 
                                     />
                             }
                     </td>
