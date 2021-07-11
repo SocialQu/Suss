@@ -19,7 +19,7 @@ const getTitles = (sentences:iSentence[]):string[] => {
     const center:number[] = findCenter(sentences.map(({ embeddings }) => embeddings))
     const similarities = sentences.map((s, i) => ({ ...s, similarity:getSimilarity(s.embeddings, center)}))
     const sortedSentences = [...similarities].sort(({ similarity:a }, { similarity:b }) => a > b ? 1 : -1)
-    const topSentences = sortedSentences.filter((_, i) => i < 10)
+    const topSentences = sortedSentences.filter((_, i) => i < 5)
     const titles = topSentences.map(({ text }) => text)
     return titles
 }
