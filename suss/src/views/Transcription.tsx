@@ -25,7 +25,6 @@ export const Transcription = ({ summarize }:{ summarize(sentences:string[]):void
 
     useEffect(() => {
         const newTranscript = interimTranscript.replace(finalTranscript, '')
-        console.log(!newTranscript.length)
         if(!newTranscript.length) setSentences(s => [...s, s.reduce((d, i) => d.replace(i, ''), finalTranscript)]) 
     }, [interimTranscript, finalTranscript])
 
