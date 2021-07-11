@@ -104,7 +104,7 @@ const summarize = ({ titles, topics, notes, conclusions:{ beginning, middle, end
     topics:topics.map(t => t.map(i => ({label: i}))),
     notes:notes.map(n => ({label: n})),
     conclusions:[
-        {label:'begging', options:beginning.map(b => ({label:b}))},
+        {label:'begining', options:beginning.map(b => ({label:b}))},
         {label:'middle', options:middle.map(b => ({label:b}))},
         {label:'end', options:end.map(e =>({label:e}))}
     ]
