@@ -1,5 +1,5 @@
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
-import { useState, CSSProperties } from "react"
+import { useState, CSSProperties, useEffect } from "react"
 import { ctaStyle } from '../views/Landing'
 
 
@@ -17,9 +17,17 @@ const transcriptStyle:CSSProperties = {
     minHeight:'calc(100vh - 80px - 100px - 4em - 1em - 100px)'
 }
 
-export const Transcription = () => {
-    const { transcript } = useSpeechRecognition()
+
+export const Transcription = ({ summarize }:{ summarize(sentences:string[]):void }) => {
+    const { transcript, interimTranscript, finalTranscript } = useSpeechRecognition({ clearTranscriptOnListen:true })
     const [ isListening, setIsListening ] = useState(false)
+    const [ sentences, setSentences ] = useState<string[]>([])
+
+    useEffect(() => {
+        const newTranscript = interimTranscript.replace(finalTranscript, '')
+        if(!newTranscript.length) setSentences(s => [...s, s.reduce((d, i) => d.replace(i, ''), finalTranscript)]) 
+    }, [interimTranscript, finalTranscript])
+
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) return <div>
         Browser is not Support Speech Recognition.
@@ -34,6 +42,7 @@ export const Transcription = () => {
     const stop = () => {
         setIsListening(false)
         SpeechRecognition.stopListening()
+        summarize(sentences)
     }
   
     return <div className='container' style={transcriptionStyle}>

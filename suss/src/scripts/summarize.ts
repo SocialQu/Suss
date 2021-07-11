@@ -1,13 +1,10 @@
-/*
-npx ts-node summarize
-*/
+import { getSimilarity, getDictionary, getEmbeddings, getInformation, findCenter } from './utils'
+import { GroupTypeBase, OptionTypeBase } from 'react-select'
 
-import { getSimilarity, getDictionary, getEmbeddings, getInformation, findCenter } from "./utils"
-import { Tensor2D } from '@tensorflow/tfjs-node'
-import { transcript } from './data/transcript'
+import { Tensor2D } from '@tensorflow/tfjs'
 import { Matrix, solve } from 'ml-matrix'
 import KMeans from 'tf-kmeans'
-import { PCA } from 'ml-pca'
+import { PCA } from "ml-pca"
 
 
 interface iSentence {
@@ -94,31 +91,38 @@ const getConclusion = (sentences:iSentence[]):iConclusion => {
 }
 
 
-interface iSummary { titles: string[], topics: string[][], notes: string[], conclusions: iConclusion }
-const summarize = async(transcript:string):Promise<iSummary> => {
-    const words = transcript.split(/[\s\n]+/)
-    const tokens = transcript.split('\n')
+interface iTextSummary { titles:string[], topics:string[][], notes:string[], conclusions:iConclusion }
+export interface iSummary {
+    titles:OptionTypeBase[]
+    topics:OptionTypeBase[][]
+    notes:OptionTypeBase[]
+    conclusions:GroupTypeBase<OptionTypeBase>[]
+}
+
+const summarize = ({ titles, topics, notes, conclusions:{ beginning, middle, end } }:iTextSummary):iSummary => ({
+    titles:titles.map(t => ({label: t})),
+    topics:topics.map(t => t.map(i => ({label: i}))),
+    notes:notes.map(n => ({label: n})),
+    conclusions:[
+        {label:'begining', options:beginning.map(b => ({label:b}))},
+        {label:'middle', options:middle.map(b => ({label:b}))},
+        {label:'end', options:end.map(e =>({label:e}))}
+    ]
+})
+
+
+
+export const getSummary = async(tokens:string[]):Promise<iSummary> => {
     const tensors = await getEmbeddings(tokens)
     const embeddings = await tensors.array()
-    const sentences:iSentence[] = tokens.map((text, order) => ({ text, order, embeddings:embeddings[order]}))
-
-    return {
+    const words = tokens.join().split(' ')
+    const sentences:iSentence[] = tokens.map((text, order) => ({ text, order, embeddings:embeddings[order] }))
+    const summary = {
         titles:getTitles(sentences),
         topics:getTopics(sentences, tensors),
         notes:getNotes(sentences, words),
         conclusions:getConclusion(sentences)
     }
+
+    return summarize(summary)
 }
-
-
-summarize(transcript).then(console.log).catch(console.log)
-
-
-/* Tests
-
-1. The titles have the greatest overall similarity. (Pass)
-2. There are 5 top sentences by topic.
-3. The notes have the most information.
-4. Beggining, Middle & End similarity. 
-
-*/

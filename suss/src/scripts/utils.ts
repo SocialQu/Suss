@@ -1,5 +1,5 @@
 import { load } from '@tensorflow-models/universal-sentence-encoder'
-import '@tensorflow/tfjs-node'
+import '@tensorflow/tfjs'
 
 
 export interface iDictionary {[key:string]:number}
@@ -19,7 +19,7 @@ export const getSimilarity = (center:number[], embedding: number[]) => {
 export const getEmbeddings = async(sentences:string[]) => {
     const model = await load()
     const tensors = await model.embed(sentences)
-    return tensors
+    return tensors    
 }
 
 export const findCenter = (vectors: number[][]) => [...Array(vectors[0].length)].map((_, idx) => 
