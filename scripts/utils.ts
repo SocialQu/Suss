@@ -19,9 +19,7 @@ export const getSimilarity = (center:number[], embedding: number[]) => {
 export const getEmbeddings = async(sentences:string[]) => {
     const model = await load()
     const tensors = await model.embed(sentences)
-    const embeddings = await tensors.array()
-    return embeddings
-    
+    return tensors
 }
 
 export const findCenter = (vectors: number[][]) => [...Array(vectors[0].length)].map((_, idx) => 
