@@ -865,6 +865,11 @@ tar@^4.4.2, tar@^4.4.6:
     safe-buffer "^5.1.2"
     yallist "^3.0.3"
 
+tf-kmeans@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/tf-kmeans/-/tf-kmeans-0.0.3.tgz#31f17be297333851434af14cee434c31a3134c98"
+  integrity sha512-rBFaWlrYKxbOS+FaYpR56P9tWRTRjrhrS+sw4RZLHbZQcOh2tw80Gbxx2DizVS9jl8xhVU9wGWXCTsDwnBDTSA==
+
 util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"

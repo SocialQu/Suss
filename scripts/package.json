@@ -8,6 +8,7 @@
     "@tensorflow/tfjs-node": "^3.6.1",
     "ml-kmeans": "^5.0.0",
     "ml-pca": "^4.0.2",
-    "ml-regression-simple-linear": "^2.0.3"
+    "ml-regression-simple-linear": "^2.0.3",
+    "tf-kmeans": "^0.0.3"
   }
 }
