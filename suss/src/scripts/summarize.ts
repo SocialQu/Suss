@@ -1,9 +1,11 @@
 import { getSimilarity, getDictionary, getEmbeddings, getInformation, findCenter } from './utils'
 import { GroupTypeBase, OptionTypeBase } from 'react-select'
+
+import { Tensor2D } from '@tensorflow/tfjs'
 import { Matrix, solve } from 'ml-matrix'
+import KMeans from 'tf-kmeans'
 import { PCA } from "ml-pca"
 
-const kmeans = require('ml-kmeans')
 
 interface iSentence {
     text:string
@@ -22,14 +24,18 @@ const getTitles = (sentences:iSentence[]):string[] => {
     return titles
 }
 
-interface iCentroid { centroid:number[], error:number, size:number }
-interface iClustered { clusters:number[], centroids:iCentroid[] }
-const getTopics = (sentences:iSentence[]):string[][] => {
-    const embeddings = sentences.map(({embeddings}) => embeddings)
-    const { clusters, centroids }:iClustered = kmeans(embeddings, 5)
-    const clustered = sentences.map((s,i) => ({...s, cluster:clusters[i]}))
 
-    const topics = centroids.map(({ centroid }, i) => {
+const getTopics = (sentences:iSentence[], embeddings:Tensor2D):string[][] => {
+    const distanceFunction = KMeans.EuclideanDistance
+	const kmeans = new KMeans({ k:5, maxIter:200, distanceFunction })
+
+	const clusters = kmeans.Train(embeddings)
+    const predictions = clusters.arraySync() as number[]
+    const centroids = kmeans.Centroids().arraySync() as number[][]
+
+    const clustered = sentences.map((s,i) => ({...s, cluster:predictions[i]}))
+
+    const topics = centroids.map(( centroid, i) => {
         const filtered = clustered.filter(({ cluster }) => cluster === i)
         const similarities = filtered.map((s, i) => ({ ...s, similarity:getSimilarity(s.embeddings, centroid)}))
         const sorted = [...similarities].sort(({ similarity: a }, { similarity: b }) => a > b ? 1 : -1)
@@ -93,7 +99,6 @@ export interface iSummary {
     conclusions:GroupTypeBase<OptionTypeBase>[]
 }
 
-
 const summarize = ({ titles, topics, notes, conclusions:{ beginning, middle, end } }:iTextSummary):iSummary => ({
     titles:titles.map(t => ({label: t})),
     topics:topics.map(t => t.map(i => ({label: i}))),
@@ -108,12 +113,13 @@ const summarize = ({ titles, topics, notes, conclusions:{ beginning, middle, end
 
 
 export const getSummary = async(tokens:string[]):Promise<iSummary> => {
-    const embeddings = await getEmbeddings(tokens)
+    const tensors = await getEmbeddings(tokens)
+    const embeddings = await tensors.array()
     const words = tokens.join().split(' ')
     const sentences:iSentence[] = tokens.map((text, order) => ({ text, order, embeddings:embeddings[order] }))
     const summary = {
         titles:getTitles(sentences),
-        topics:getTopics(sentences),
+        topics:getTopics(sentences, tensors),
         notes:getNotes(sentences, words),
         conclusions:getConclusion(sentences)
     }
